@@ -17,10 +17,11 @@
     --glow:    rgba(94,203,240,0.18);
     --greyish:   #637D96;
 }
+
 *{
     margin: 0;
     padding: 0;
-    cursor: none !important;
+    cursor: none;
 }
 body{
   background-color: var(--midnight);
@@ -39,14 +40,14 @@ body{
       100% { background-position: 30% 10%, 70% 80%, 45% 95%;  }
     }
     .bg_grid {
-    position: fixed; inset: 0; z-index: 0;
-    background-image:
+      position: fixed; inset: 0; z-index: 0;
+      background-image:
         /* linear-gradient(rgba(145,168,195,0.04) 1px, transparent 1px),
         linear-gradient(90deg, rgba(145,168,195,0.04) 1px, transparent 1px); */
-    linear-gradient(rgba(145,168,195,0.09) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(145,168,195,0.09) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+        linear-gradient(rgba(145,168,195,0.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(145,168,195,0.09) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
     }
 main{
     position: relative;
@@ -108,56 +109,9 @@ nav{
     /* padding: 0.5rem 0.5rem; */
 }
 nav>div:nth-child(2){
-    width: 15%;
+    width: 20%;
+    /* background-color: red; */
 }
-
-/* Login button blue version code */
-
-/* nav>div:nth-child(2)>a{
-    position:relative;
-    overflow:hidden;
-    padding-top: 0.8rem;
-    padding-bottom: 0.8rem;
-    border-radius: 0.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: Syne;
-    font-size: 0.75rem;
-    font-weight: 750;
-    letter-spacing: 0.5em;
-    padding-left: 0.5em;
-    text-decoration: none;
-    color:var(--amber);
-    background-color: var(--bright);
-    transition: transform 0.25s ease-in-out;
-}
-nav>div:nth-child(2)>a:hover{
-    transform: translateY(-0.1em);
-box-shadow: 2px 0px 75px 8px rgba(94,203,240,0.3),0px 0px 49px -3px rgba(94,203,240,0.3);
-}
-
-nav>div:nth-child(2)>a::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg, 
-        transparent, 
-        rgba(255, 255, 255, 0.3), 
-        transparent
-    );
-}
-nav>div:nth-child(2)>a:hover::after {
-    left: 100%;
-    transition: all 0.5s ease;
-} */
-
-
-/* Login Button simple */
 nav>div:nth-child(2)>a{
     padding-top: 0.8rem;
     padding-bottom: 0.8rem;
@@ -180,9 +134,8 @@ nav>div:nth-child(2)>a:hover{
 
 }
 
-nav>div:nth-child(2)>a:active {
-    cursor: none;
-}
+
+
 
 
 #cursor{

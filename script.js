@@ -1,4 +1,30 @@
+
+let started = false;
 let cursor=document.getElementById('cursor')
+let ring=document.getElementById('ring')
+
+document.addEventListener('mousemove', e => {
+    if (!started){
+      cursor.style.left=e.clientX+'px'
+      cursor.style.top=e.clientY+'px'
+      ring.style.left=e.clientX+'px'
+      ring.style.top=e.clientY+'px'
+      cursor.style.opacity = '1';
+      ring.style.opacity   = '1';
+      started = true;
+    }
+});
+
+document.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", e => {
+    e.preventDefault();
+    document.body.style.opacity = 0;
+    setTimeout(() => {
+      window.location = link.href;
+    }, 0);
+  });
+});
+
 let mx=0
 let my=0
 document.addEventListener('mousemove',e=>{
@@ -7,7 +33,6 @@ document.addEventListener('mousemove',e=>{
     cursor.style.left=e.clientX+'px'
     cursor.style.top=e.clientY+'px'
 })
-let ring=document.getElementById('ring')
 let rx=0
 let ry=0;
 (function loop() {
