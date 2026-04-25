@@ -10,23 +10,13 @@
 -- Sirf institute ka admin — teachers aur students banata hai
 -- Admin hi roll numbers assign karta hai
 
-CREATE TABLE admins (
-    id          SERIAL PRIMARY KEY,
-    full_name   VARCHAR(100) NOT NULL,
-    email       VARCHAR(150) UNIQUE NOT NULL,
-    password    TEXT NOT NULL,              -- bcrypt hashed
-    created_at  TIMESTAMP DEFAULT NOW()
-);
-
-
 -- ─── 2. TEACHERS ─────────────────────────────────────────────
 -- Roll number institute dega e.g. TCH-001
 -- Teacher khud login karega roll_number + password se
 
 CREATE TABLE teachers (
-    id              SERIAL PRIMARY KEY,
+    id              SERIAL PRIMARY KEY,  -- e.g. TCH-001 (admin assign karega)
     full_name       VARCHAR(100) NOT NULL,
-    roll_number     VARCHAR(20) UNIQUE NOT NULL,   -- e.g. TCH-001 (admin assign karega)
     password        TEXT NOT NULL,                 -- bcrypt hashed
     subject         VARCHAR(100),                  -- e.g. "Physics"
     phone           VARCHAR(20),
@@ -53,9 +43,8 @@ INSERT INTO grade_levels (name) VALUES
 -- Student khud login karega roll_number + password se
 
 CREATE TABLE students (
-    id              SERIAL PRIMARY KEY,
+    roll_number     SERIAL PRIMARY KEY,  -- e.g. STU-2025-001 (admin assign karega)
     full_name       VARCHAR(100) NOT NULL,
-    roll_number     VARCHAR(20) UNIQUE NOT NULL,   -- e.g. STU-2025-001 (admin assign karega)
     password        TEXT NOT NULL,                 -- bcrypt hashed
     grade_level_id  INT REFERENCES grade_levels(id) ON DELETE SET NULL,
     phone           VARCHAR(20),
