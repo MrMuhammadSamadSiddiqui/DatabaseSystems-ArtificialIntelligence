@@ -1,127 +1,201 @@
 -- ============================================================
 --   VE - Virtual Education Institute
---   LMS Database Schema (Basic Version)
+--   LMS Database Schema (Updated Version)
 --   Grades: O Level | A Level | IGCSE | Edexcel
+--   Login: Role based (Teacher / Student)
 -- ============================================================
- 
- 
--- ─── 1. USERS ────────────────────────────────────────────────
--- Students, Teachers, Admin sab yahan honge
- 
-CREATE TABLE users (
+
+
+-- ─── 1. ADMIN ────────────────────────────────────────────────
+-- Sirf institute ka admin — teachers aur students banata hai
+-- Admin hi roll numbers assign karta hai
+
+CREATE TABLE admins (
     id          SERIAL PRIMARY KEY,
     full_name   VARCHAR(100) NOT NULL,
     email       VARCHAR(150) UNIQUE NOT NULL,
-    password    TEXT NOT NULL,
-    role        VARCHAR(20) CHECK (role IN ('student', 'teacher', 'admin')) DEFAULT 'student',
+    password    TEXT NOT NULL,              -- bcrypt hashed
     created_at  TIMESTAMP DEFAULT NOW()
 );
- 
- 
--- ─── 2. GRADE LEVELS ─────────────────────────────────────────
--- VE ke 4 grade systems
- 
+
+
+-- ─── 2. TEACHERS ─────────────────────────────────────────────
+-- Roll number institute dega e.g. TCH-001
+-- Teacher khud login karega roll_number + password se
+
+CREATE TABLE teachers (
+    id              SERIAL PRIMARY KEY,
+    full_name       VARCHAR(100) NOT NULL,
+    roll_number     VARCHAR(20) UNIQUE NOT NULL,   -- e.g. TCH-001 (admin assign karega)
+    password        TEXT NOT NULL,                 -- bcrypt hashed
+    subject         VARCHAR(100),                  -- e.g. "Physics"
+    phone           VARCHAR(20),
+    created_at      TIMESTAMP DEFAULT NOW()
+);
+
+
+-- ─── 3. GRADE LEVELS ─────────────────────────────────────────
+
 CREATE TABLE grade_levels (
     id      SERIAL PRIMARY KEY,
     name    VARCHAR(50) UNIQUE NOT NULL
-    -- Examples: 'O Level', 'A Level', 'IGCSE', 'Edexcel'
 );
- 
--- VE ke grade levels seed karo
+
 INSERT INTO grade_levels (name) VALUES
     ('O Level'),
     ('A Level'),
     ('IGCSE'),
     ('Edexcel');
- 
- 
--- ─── 3. SUBJECTS ─────────────────────────────────────────────
--- Har grade ka alag subject hoga
- 
-CREATE TABLE subjects (
+
+
+-- ─── 4. STUDENTS ─────────────────────────────────────────────
+-- Roll number institute dega e.g. STU-2025-001
+-- Student khud login karega roll_number + password se
+
+CREATE TABLE students (
     id              SERIAL PRIMARY KEY,
-    name            VARCHAR(100) NOT NULL,   -- e.g. "Physics", "Mathematics"
-    grade_level_id  INT REFERENCES grade_levels(id) ON DELETE CASCADE,
+    full_name       VARCHAR(100) NOT NULL,
+    roll_number     VARCHAR(20) UNIQUE NOT NULL,   -- e.g. STU-2025-001 (admin assign karega)
+    password        TEXT NOT NULL,                 -- bcrypt hashed
+    grade_level_id  INT REFERENCES grade_levels(id) ON DELETE SET NULL,
+    phone           VARCHAR(20),
+    guardian_name   VARCHAR(100),
     created_at      TIMESTAMP DEFAULT NOW()
 );
- 
--- Kuch example subjects
+
+
+-- ─── 5. SUBJECTS ─────────────────────────────────────────────
+
+CREATE TABLE subjects (
+    id              SERIAL PRIMARY KEY,
+    name            VARCHAR(100) NOT NULL,
+    grade_level_id  INT REFERENCES grade_levels(id) ON DELETE CASCADE
+);
+
 INSERT INTO subjects (name, grade_level_id) VALUES
-    ('Mathematics',         1),  -- O Level
-    ('Physics',             1),  -- O Level
-    ('Chemistry',           1),  -- O Level
-    ('Mathematics',         2),  -- A Level
-    ('Physics',             2),  -- A Level
-    ('Mathematics',         3),  -- IGCSE
-    ('English Language',    3),  -- IGCSE
-    ('Mathematics',         4),  -- Edexcel
-    ('Business Studies',    4);  -- Edexcel
- 
- 
--- ─── 4. COURSES ──────────────────────────────────────────────
--- Har subject ka ek course hoga
- 
+    ('Mathematics',       1),  -- O Level
+    ('Physics',           1),
+    ('Chemistry',         1),
+    ('English',           1),
+    ('Mathematics',       2),  -- A Level
+    ('Physics',           2),
+    ('Chemistry',         2),
+    ('Mathematics',       3),  -- IGCSE
+    ('English Language',  3),
+    ('Mathematics',       4),  -- Edexcel
+    ('Business Studies',  4);
+
+
+-- ─── 6. COURSES ──────────────────────────────────────────────
+-- Har subject ka ek course — teacher assign hoga
+
 CREATE TABLE courses (
     id              SERIAL PRIMARY KEY,
-    title           VARCHAR(200) NOT NULL,        -- e.g. "O Level Physics 2025"
-    description     TEXT,
+    title           VARCHAR(200) NOT NULL,       -- e.g. "O Level Physics 2025"
     subject_id      INT REFERENCES subjects(id) ON DELETE SET NULL,
-    teacher_id      INT REFERENCES users(id) ON DELETE SET NULL,
+    teacher_id      INT REFERENCES teachers(id) ON DELETE SET NULL,
     is_published    BOOLEAN DEFAULT FALSE,
     created_at      TIMESTAMP DEFAULT NOW()
 );
- 
- 
--- ─── 5. CHAPTERS ─────────────────────────────────────────────
--- Course ke andar chapters / topics
- 
+
+
+-- ─── 7. CHAPTERS ─────────────────────────────────────────────
+
 CREATE TABLE chapters (
     id          SERIAL PRIMARY KEY,
     course_id   INT REFERENCES courses(id) ON DELETE CASCADE,
-    title       VARCHAR(200) NOT NULL,   -- e.g. "Chapter 1: Forces"
-    position    INT NOT NULL             -- chapter ka order
+    title       VARCHAR(200) NOT NULL,
+    position    INT NOT NULL
 );
- 
- 
--- ─── 6. LESSONS ──────────────────────────────────────────────
--- Chapter ke andar actual content (video/notes)
- 
-CREATE TABLE lessons (
+
+
+-- ─── 8. STUDY MATERIAL / LECTURES ────────────────────────────
+-- Teacher yahan lectures aur notes upload karega
+
+CREATE TABLE study_material (
     id              SERIAL PRIMARY KEY,
     chapter_id      INT REFERENCES chapters(id) ON DELETE CASCADE,
+    teacher_id      INT REFERENCES teachers(id) ON DELETE SET NULL,
     title           VARCHAR(200) NOT NULL,
-    content_type    VARCHAR(20) CHECK (content_type IN ('video', 'notes', 'quiz')),
-    content_url     TEXT,       -- video link ya PDF link
-    position        INT NOT NULL
+    material_type   VARCHAR(20) CHECK (material_type IN ('video', 'notes', 'slides', 'other')),
+    file_url        TEXT NOT NULL,     -- link to uploaded file / video
+    description     TEXT,
+    uploaded_at     TIMESTAMP DEFAULT NOW()
 );
- 
- 
--- ─── 7. ENROLLMENTS ──────────────────────────────────────────
--- Student kaunse course mein enrolled hai
- 
+
+
+-- ─── 9. ENROLLMENTS ──────────────────────────────────────────
+-- Student kaunse course mein hai
+
 CREATE TABLE enrollments (
     id              SERIAL PRIMARY KEY,
-    student_id      INT REFERENCES users(id) ON DELETE CASCADE,
+    student_id      INT REFERENCES students(id) ON DELETE CASCADE,
     course_id       INT REFERENCES courses(id) ON DELETE CASCADE,
     enrolled_at     TIMESTAMP DEFAULT NOW(),
-    UNIQUE (student_id, course_id)   -- ek baar se zyada enroll nahi ho sakta
+    UNIQUE (student_id, course_id)
 );
- 
- 
--- ─── 8. PROGRESS ─────────────────────────────────────────────
--- Student ne konsa lesson complete kiya
- 
+
+
+-- ─── 10. ATTENDANCE ──────────────────────────────────────────
+-- Teacher attendance upload karega — per student per date
+
+CREATE TABLE attendance (
+    id              SERIAL PRIMARY KEY,
+    student_id      INT REFERENCES students(id) ON DELETE CASCADE,
+    course_id       INT REFERENCES courses(id) ON DELETE CASCADE,
+    teacher_id      INT REFERENCES teachers(id) ON DELETE SET NULL,
+    date            DATE NOT NULL,
+    status          VARCHAR(10) CHECK (status IN ('present', 'absent', 'leave')) NOT NULL,
+    marked_at       TIMESTAMP DEFAULT NOW(),
+    UNIQUE (student_id, course_id, date)   -- ek din mein ek baar sirf
+);
+
+
+-- ─── 11. MARKS ───────────────────────────────────────────────
+-- Teacher marks upload karega — test / assignment / exam
+
+CREATE TABLE marks (
+    id              SERIAL PRIMARY KEY,
+    student_id      INT REFERENCES students(id) ON DELETE CASCADE,
+    course_id       INT REFERENCES courses(id) ON DELETE CASCADE,
+    teacher_id      INT REFERENCES teachers(id) ON DELETE SET NULL,
+    exam_type       VARCHAR(50) CHECK (exam_type IN ('test', 'assignment', 'mid_exam', 'final_exam')),
+    total_marks     INT NOT NULL,
+    obtained_marks  INT NOT NULL,
+    remarks         TEXT,
+    exam_date       DATE,
+    uploaded_at     TIMESTAMP DEFAULT NOW()
+);
+
+
+-- ─── 12. STUDENT PROGRESS ────────────────────────────────────
+-- Student ne kaunsa material dekha / complete kiya
+
 CREATE TABLE progress (
     id              SERIAL PRIMARY KEY,
-    student_id      INT REFERENCES users(id) ON DELETE CASCADE,
-    lesson_id       INT REFERENCES lessons(id) ON DELETE CASCADE,
+    student_id      INT REFERENCES students(id) ON DELETE CASCADE,
+    material_id     INT REFERENCES study_material(id) ON DELETE CASCADE,
     completed       BOOLEAN DEFAULT FALSE,
     completed_at    TIMESTAMP,
-    UNIQUE (student_id, lesson_id)
+    UNIQUE (student_id, material_id)
 );
- 
- 
+
+
 -- ============================================================
---   DONE! Basic schema ready hai.
---   Run karo: psql -U postgres -d lms_db -f schema.sql
--- ===========================================================
+--   TABLE SUMMARY
+--   admins          → institute ka admin
+--   teachers        → TCH-001 se login
+--   students        → STU-2025-001 se login
+--   grade_levels    → O Level, A Level, IGCSE, Edexcel
+--   subjects        → Math, Physics, etc.
+--   courses         → subject ka course + teacher assigned
+--   chapters        → course ke andar topics
+--   study_material  → teacher uploads lectures/notes
+--   enrollments     → student joins course
+--   attendance      → teacher marks attendance
+--   marks           → teacher uploads marks
+--   progress        → student ne kya dekha
+--
+--   Run Command:
+--   psql -U postgres -d lms_db -f schema.sql
+-- ============================================================
