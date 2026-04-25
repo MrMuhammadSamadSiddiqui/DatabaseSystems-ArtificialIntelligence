@@ -31,6 +31,7 @@
       line-height: 1.6;
     }
 
+    /* Header Section */
     header {
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: white;
@@ -49,6 +50,7 @@
     header h1 { margin: 0; font-size: 1.8rem; font-weight: 700; }
     header p { opacity: 0.9; font-weight: 300; margin-top: 5px; }
 
+    /* Layout */
     main {
       max-width: 800px;
       margin: -30px auto 50px;
@@ -92,6 +94,7 @@
     .req { color: var(--req-color); }
     .optional { font-weight: normal; color: var(--text-muted); font-size: 0.8rem; }
 
+    /* Inputs & Selects */
     input, select {
       width: 100%;
       padding: 12px 15px;
@@ -109,32 +112,37 @@
       background-color: #fff;
     }
 
+    /* Toggle Switches */
     .toggle-group { display: flex; gap: 10px; margin-bottom: 16px; }
     .toggle-btn {
-      flex: 1; padding: 10px; border: 1px solid var(--border-color);
+      flex: 1; padding: 12px; border: 1px solid var(--border-color);
       background: white; cursor: pointer; border-radius: 6px; font-weight: 600;
+      transition: 0.3s;
     }
     .toggle-btn.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
 
+    /* Sibling UI */
     .add-btn {
       background: #f0fdf4; color: #16a34a; border: 1px dashed #16a34a;
-      padding: 10px; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%;
+      padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600; 
+      width: 100%; margin-top: 10px;
     }
+    .sibling-entry { background: #f9fafb; padding: 20px; border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--border-color); }
+    .sibling-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .remove-btn { background: #fee2e2; color: #dc2626; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
 
+    /* Submit Button */
     .submit-btn {
-      background: var(--primary-color); color: white; width: 100%; padding: 16px;
-      border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700;
+      background: var(--primary-color); color: white; width: 100%; padding: 18px;
+      border: none; border-radius: 10px; font-size: 1.1rem; font-weight: 700;
       cursor: pointer; transition: 0.3s; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
     }
-
-    .sibling-entry { background: #f9fafb; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--border-color); }
-    .sibling-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
-    .remove-btn { background: #fee2e2; color: #dc2626; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+    .submit-btn:hover { background: var(--secondary-color); transform: translateY(-1px); }
 
     .note { font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 15px; }
     footer { text-align: center; padding: 30px; color: var(--text-muted); font-size: 0.9rem; }
     
-    #custom-class-container { background: #fffbeb; border: 1px dashed #f59e0b; padding: 15px; border-radius: 8px; }
+    #custom-class-container { background: #fffbeb; border: 1px dashed #f59e0b; padding: 15px; border-radius: 8px; margin-top: 10px; }
   </style>
 </head>
 <body>
@@ -163,31 +171,8 @@
             <input type="date" name="date_of_birth" required />
           </div>
           <div class="field">
-            <label>Guardian's Contact Number <span class="req">*</span></label>
+            <label>Guardian's Contact <span class="req">*</span></label>
             <input type="tel" name="guardian_contact" placeholder="+92 300 0000000" required />
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Contact Details</h2>
-        <div class="grid-2">
-          <div class="field">
-            <label>Student Contact Number <span class="optional">(optional)</span></label>
-            <input type="tel" name="student_contact" placeholder="+92 300 0000000" />
-          </div>
-          <div class="field">
-            <label>Country <span class="req">*</span></label>
-            <select name="country" required>
-              <option value="">Select country</option>
-              <option>Pakistan</option>
-              <option>United Kingdom</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="field full-width">
-            <label>City <span class="req">*</span></label>
-            <input type="text" name="city" placeholder="e.g. Karachi" required />
           </div>
         </div>
       </div>
@@ -201,6 +186,7 @@
               <option value="">Select board</option>
               <option>O Level</option>
               <option>A Level</option>
+              <option>IGCSE</option>
               <option>Other</option>
             </select>
           </div>
@@ -215,18 +201,22 @@
           </div>
           <div class="field full-width" id="custom-class-container" style="display:none;">
             <label>Specify your Class / Year <span class="req">*</span></label>
-            <input type="text" name="custom_class_year" id="custom_class_input" placeholder="e.g. Grade 9" />
+            <input type="text" name="custom_class_year" id="custom_class_input" placeholder="e.g. Grade 9, University Year 1" />
           </div>
         </div>
       </div>
 
       <div class="card">
         <h2>Siblings at VE Institute</h2>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">Do you have any brother or sister currently studying at VE Institute?</p>
+        
         <div class="toggle-group">
           <button type="button" class="toggle-btn active" id="sib-no" onclick="toggleSiblings(false)">No</button>
           <button type="button" class="toggle-btn" id="sib-yes" onclick="toggleSiblings(true)">Yes</button>
         </div>
+        
         <input type="hidden" name="has_sibling" id="has_sibling" value="no" />
+
         <div id="siblings-container" style="display:none;">
           <div id="sibling-list"></div>
           <button type="button" class="add-btn" id="add-sibling-btn" onclick="addSibling()">+ Add Another Sibling</button>
@@ -234,17 +224,108 @@
       </div>
 
       <button type="submit" class="submit-btn" id="submit-btn">Submit Application</button>
-      <p class="note">* Required fields. Admin will contact you shortly.</p>
+      <p class="note">* Once submitted, admin will review and contact you with Roll Number.</p>
     </form>
   </main>
 
   <footer>
-    <p>&copy; 2026 Virtual Education Institute</p>
+    <p>&copy; 2026 Virtual Education Institute — All rights reserved</p>
   </footer>
 
   <script>
-    // Copy your existing JS here (toggleCustomClass, toggleSiblings, addSibling functions)
-    // Make sure they match the IDs used above.
+    let siblingCount = 0;
+
+    // ── Toggle Custom Class ───────────────────────────
+    function toggleCustomClass(value) {
+      const container = document.getElementById('custom-class-container');
+      const input = document.getElementById('custom_class_input');
+      if (value === 'other') {
+        container.style.display = 'block';
+        input.required = true;
+      } else {
+        container.style.display = 'none';
+        input.required = false;
+        input.value = '';
+      }
+    }
+
+    // ── Toggle Siblings (Working Fix) ──────────────────
+    function toggleSiblings(show) {
+      const container = document.getElementById('siblings-container');
+      const hiddenInput = document.getElementById('has_sibling');
+      const btnYes = document.getElementById('sib-yes');
+      const btnNo = document.getElementById('sib-no');
+
+      if (show) {
+        container.style.display = 'block';
+        hiddenInput.value = 'yes';
+        btnYes.classList.add('active');
+        btnNo.classList.remove('active');
+        if (siblingCount === 0) addSibling();
+      } else {
+        container.style.display = 'none';
+        hiddenInput.value = 'no';
+        btnNo.classList.add('active');
+        btnYes.classList.remove('active');
+      }
+    }
+
+    // ── Add Sibling Row ───────────────────────────────
+    function addSibling() {
+      if (siblingCount >= 5) return;
+      siblingCount++;
+      const list = document.getElementById('sibling-list');
+      const entry = document.createElement('div');
+      entry.className = 'sibling-entry';
+      entry.id = `sibling-${siblingCount}`;
+
+      entry.innerHTML = `
+        <div class="sibling-header">
+          <span style="font-weight:700; color:var(--primary-color);">Sibling #${siblingCount}</span>
+          ${siblingCount > 1 ? `<button type="button" class="remove-btn" onclick="removeSibling(${siblingCount})">✕ Remove</button>` : ''}
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label>Full Name</label>
+            <input type="text" name="sibling_name_${siblingCount}" placeholder="Full Name" />
+          </div>
+          <div class="field">
+            <label>Roll Number</label>
+            <input type="text" name="sibling_roll_${siblingCount}" placeholder="e.g. VE-123" />
+          </div>
+        </div>
+      `;
+      list.appendChild(entry);
+      updateAddButton();
+    }
+
+    function removeSibling(id) {
+      const el = document.getElementById(`sibling-${id}`);
+      if (el) el.remove();
+      
+      const entries = document.querySelectorAll('.sibling-entry');
+      siblingCount = entries.length;
+      entries.forEach((entry, i) => {
+        const n = i + 1;
+        entry.id = `sibling-${n}`;
+        entry.querySelector('span').textContent = `Sibling #${n}`;
+      });
+      
+      updateAddButton();
+      if (siblingCount === 0) toggleSiblings(false);
+    }
+
+    function updateAddButton() {
+      const btn = document.getElementById('add-sibling-btn');
+      btn.style.display = siblingCount >= 5 ? 'none' : 'block';
+    }
+
+    // ── Form Submission ───────────────────────────────
+    document.getElementById('reg-form').addEventListener('submit', function(e) {
+      // Form submission logic remains same as before
+      console.log("Form submitted!");
+    });
   </script>
+
 </body>
 </html>
