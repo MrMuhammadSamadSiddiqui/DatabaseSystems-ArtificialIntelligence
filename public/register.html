@@ -1,99 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Student Registration — VE Institute</title>
-  <link rel="stylesheet" href="/public/css/register.css">  
-  <script src="/public/js/register.js" defer></script>  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Student Registration — VE Institute</title>
+    <link rel="stylesheet" href="/public/css/main.css"> 
+    <link rel="stylesheet" href="/public/css/register.css">  
+    <script src="/public/js/register.js" defer></script>  
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Syne:wght@400..800&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="registration-page">
+    <div class="bg_pattern"></div>
+    <div class="bg_grid"></div>
+    <div id="cursor"></div>
+    <div id="ring"></div>
 
-  <header>
-    <div class="logo">VE</div>
-    <h1>Virtual Education Institute</h1>
-    <p>Student Registration Form</p>
-  </header>
+    <main class="reg-container">
+        <header class="reg-header">
+            <div class="logo-box">
+                <img src="/public/assets/images/logo_white.png" alt="VE Logo" class="reg-logo">
+            </div>
+            <h1 class="glow-text">VEI <span>NEXUS</span></h1>
+            <p class="reg-subtitle">Official Student Registration Portal</p>
+            <div class="line"></div>
+        </header>
 
-  <main>
-    <form id="reg-form">
-      <div class="card">
-        <h2>Personal Information</h2>
-        <div class="grid-2">
-          <div class="field">
-            <label>Student Full Name <span class="req">*</span></label>
-            <input type="text" name="full_name" placeholder="e.g. Ahmed Ali" required />
-          </div>
-          <div class="field">
-            <label>Father's Name <span class="req">*</span></label>
-            <input type="text" name="father_name" placeholder="e.g. Muhammad Ali" required />
-          </div>
-          <div class="field">
-            <label>Date of Birth <span class="req">*</span></label>
-            <input type="date" name="date_of_birth" required />
-          </div>
-          <div class="field">
-            <label>Guardian's Contact <span class="req">*</span></label>
-            <input type="tel" name="guardian_contact" placeholder="+92 300 0000000" required />
-          </div>
-        </div>
-      </div>
+        <form id="reg-form">
+            <div class="card nexus-card">
+                <div class="card-header">
+                    <span class="icon">01</span>
+                    <h2>Personal Information</h2>
+                </div>
+                <div class="grid-2">
+                    <div class="field">
+                        <label>Student Full Name <span class="req">*</span></label>
+                        <input type="text" name="full_name" placeholder="e.g. Ahmed Ali" required />
+                    </div>
+                    <div class="field">
+                        <label>Father's Name <span class="req">*</span></label>
+                        <input type="text" name="father_name" placeholder="e.g. Muhammad Ali" required />
+                    </div>
+                    <div class="field">
+                        <label>Date of Birth <span class="req">*</span></label>
+                        <input type="date" name="date_of_birth" required />
+                    </div>
+                    <div class="field">
+                        <label>Guardian's Contact <span class="req">*</span></label>
+                        <input type="tel" name="guardian_contact" placeholder="+92 300 0000000" required />
+                    </div>
+                </div>
+            </div>
 
-      <div class="card">
-        <h2>Academic Information</h2>
-        <div class="grid-2">
-          <div class="field">
-            <label>Education Board <span class="req">*</span></label>
-            <select name="education_board" required>
-              <option value="">Select board</option>
-              <option>O Level</option>
-              <option>A Level</option>
-              <option>IGCSE</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Class / Year <span class="req">*</span></label>
-            <select name="class_year" id="class_year_select" onchange="toggleCustomClass(this.value)" required>
-              <option value="">Select class</option>
-              <option>O Level – Year 1</option>
-              <option>A Level – Year 1 (AS)</option>
-              <option value="other">Other (Please specify)</option>
-            </select>
-          </div>
-          <div class="field full-width" id="custom-class-container" style="display:none;">
-            <label>Specify your Class / Year <span class="req">*</span></label>
-            <input type="text" name="custom_class_year" id="custom_class_input" placeholder="e.g. Grade 9, University Year 1" />
-          </div>
-        </div>
-      </div>
+            <div class="card nexus-card">
+                <div class="card-header">
+                    <span class="icon">02</span>
+                    <h2>Academic Information</h2>
+                </div>
+                <div class="grid-2">
+                    <div class="field">
+                        <label>Education Board <span class="req">*</span></label>
+                        <select name="education_board" required>
+                            <option value="">Select board</option>
+                            <option>O Level</option>
+                            <option>A Level</option>
+                            <option>IGCSE</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Class / Year <span class="req">*</span></label>
+                        <select name="class_year" id="class_year_select" onchange="toggleCustomClass(this.value)" required>
+                            <option value="">Select class</option>
+                            <option>O Level – Year 1</option>
+                            <option>A Level – Year 1 (AS)</option>
+                            <option value="other">Other (Please specify)</option>
+                        </select>
+                    </div>
+                    <div class="field full-width" id="custom-class-container" style="display:none;">
+                        <label>Specify your Class / Year <span class="req">*</span></label>
+                        <input type="text" name="custom_class_year" id="custom_class_input" placeholder="e.g. Grade 9" />
+                    </div>
+                </div>
+            </div>
 
-      <div class="card">
-        <h2>Siblings at VE Institute</h2>
-        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">Do you have any brother or sister currently studying at VE Institute?</p>
-        
-        <div class="toggle-group">
-          <button type="button" class="toggle-btn active" id="sib-no" onclick="toggleSiblings(false)">No</button>
-          <button type="button" class="toggle-btn" id="sib-yes" onclick="toggleSiblings(true)">Yes</button>
-        </div>
-        
-        <input type="hidden" name="has_sibling" id="has_sibling" value="no" />
+            <div class="card nexus-card">
+                <div class="card-header">
+                    <span class="icon">03</span>
+                    <h2>Siblings at VEI</h2>
+                </div>
+                <p class="info-text">Do you have any brother or sister currently studying at VE Institute?</p>
+                <div class="toggle-group">
+                    <button type="button" class="toggle-btn active" id="sib-no" onclick="toggleSiblings(false)">NO</button>
+                    <button type="button" class="toggle-btn" id="sib-yes" onclick="toggleSiblings(true)">YES</button>
+                </div>
+                <input type="hidden" name="has_sibling" id="has_sibling" value="no" />
+                <div id="siblings-container" style="display:none;">
+                    <div id="sibling-list"></div>
+                    <button type="button" class="add-btn" id="add-sibling-btn" onclick="addSibling()">+ ADD SIBLING</button>
+                </div>
+            </div>
 
-        <div id="siblings-container" style="display:none;">
-          <div id="sibling-list"></div>
-          <button type="button" class="add-btn" id="add-sibling-btn" onclick="addSibling()">+ Add Another Sibling</button>
-        </div>
-      </div>
+            <div class="form-footer">
+                <button type="submit" class="submit-btn" id="submit-btn">SUBMIT APPLICATION</button>
+                <p class="note">* Once submitted, admin will review and contact you with Roll Number.</p>
+            </div>
+        </form>
+    </main>
 
-      <button type="submit" class="submit-btn" id="submit-btn">Submit Application</button>
-      <p class="note">* Once submitted, admin will review and contact you with Roll Number.</p>
-    </form>
-  </main>
-
-  <footer>
-    <p>&copy; 2026 Virtual Education Institute — All rights reserved</p>
-  </footer>
-  
-
+    <footer class="reg-footer-text">
+        <p>&copy; 2026 Virtual Education Institute — Secure Portal</p>
+    </footer>
 </body>
 </html>
