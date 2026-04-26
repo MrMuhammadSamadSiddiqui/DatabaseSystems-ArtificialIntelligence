@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Syne:wght@400..800&display=swap');
 @font-face {
     font-family: dmsans;
     src: url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap');;
@@ -22,6 +22,7 @@
     margin: 0;
     padding: 0;
     cursor: none;
+    font-family: Syne;
 }
 body{
   background-color: var(--midnight);
@@ -52,10 +53,20 @@ body{
 main{
     position: relative;
     z-index: 1;
-    /* padding: 2rem; */
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    padding-top: 0.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 2rem; /* Added bottom padding */
+    max-width: 1400px; /* Added max-width */
+    margin: 0 auto; /* Center main content */
+}
+nav{
+        display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    gap: 2rem; /* Reduced gap */
+    padding: 1rem 0; /* Added vertical padding to nav */
 }
 nav>div:nth-child(1){
     display: flex;
@@ -63,15 +74,16 @@ nav>div:nth-child(1){
     align-items:center;
     flex-direction: row;
     /* background-color: red; */
-    gap: 1em;
-    width: 30%;
+    gap: 1.5em;
+    width: auto;
 
 }
 nav>div:nth-child(1)>div:nth-child(2)>p{
     margin: 0;
 }
-.logo>img{
-    width: 5rem;
+.logo > img {
+    width: 6rem; /* Increased logo size */
+    height: auto;
 }
 .line{
         height: 1px;
@@ -86,18 +98,15 @@ nav>div:nth-child(1)>div:nth-child(2)>p:nth-child(1){
     color:var(--text);
     font-family: Syne;
     font-weight: 800;
-    font-size: 1.3rem;
-    flex-direction: column;
-    letter-spacing: 0.12em;
-    /* background-color: yellow; */
+    font-size: 1.5rem; /* Increased font size */
+    letter-spacing: 0.15em; /* Increased letter-spacing */
 }
 nav>div:nth-child(1)>div:nth-child(2)>p:nth-child(2){
-    letter-spacing: 0.28em;
+    letter-spacing: 0.32em; /* Increased letter-spacing */
     color: var(--greyish);
     font-family: Syne;
     font-weight: 200;
-    font-size: 0.6rem;
-    /* background-color: yellow; */
+    font-size: 0.65rem; /* Increased font size */
 }
 nav{
     display: flex;
@@ -109,33 +118,35 @@ nav{
     /* padding: 0.5rem 0.5rem; */
 }
 nav>div:nth-child(2){
-    width: 15vw;
+    width: 25vw;
     /* background-color: red; */
 }
-nav>div:nth-child(2)>a{
-    padding-top: 0.8rem;
-    padding-bottom: 0.8rem;
-    border-radius: 0.2rem;
+nav > div:nth-child(2) > a {
+    padding: 1rem 0.8rem; /* Updated padding */
+    border-radius: 0.3rem; /* Increased border-radius */
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: Syne;
-    font-weight: 200;
-    font-size: 0.9rem;
-    letter-spacing: 0.3em;
-    padding-left: 0.5em;
+    font-weight: 300; /* Increased font-weight */
+    font-size: 1rem; /* Increased font size */
+    letter-spacing: 0.35em; /* Increased letter-spacing */
     text-decoration: none;
-    color:var(--greyish);
-    transition: transform 0.25s ease-in-out;
-}
-nav>div:nth-child(2)>a:hover{
-    color:var(--text);
-    transform: scale(1.05);
-
+    color: var(--greyish);
+    transition: all 0.3s ease-in-out; /* Standard transition */
+    border: 1px solid transparent; 
 }
 
-nav>div:nth-child(2)>a:active {
+nav > div:nth-child(2) > a:hover {
+    color: var(--text);
+    transform: scale(1.03); /* Slightly reduced scale */
+    border-color: rgba(94, 203, 240, 0.3); /* Added border on hover */
+    background-color: rgba(94, 203, 240, 0.05); /* Added subtle background on hover */
+}
+
+nav > div:nth-child(2) > a:active {
     cursor: none;
+    transform: scale(0.98); /* Added active effect */
 }
 
 
@@ -195,3 +206,203 @@ body:has(a:hover) #ring{
         padding-bottom: 0.5rem;
     }
 }
+
+
+ .login-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        .login-title {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-heading {
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: #fff;
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+        }
+
+        /* STEP 1 — Role selection */
+        .step { display: none; }
+        .step.active { display: block; }
+
+        .role-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .role-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            padding: 1.8rem 1rem;
+            color: #fff;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .role-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .role-btn .role-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+
+        .role-btn .role-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .role-btn .role-name {
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        /* STEP 2 — Login form */
+        .back-btn {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.4);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0;
+            margin-bottom: 1.5rem;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover { color: rgba(255,255,255,0.8); }
+
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 0.3rem 0.9rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.65rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            letter-spacing: 0.03em;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .form-input::placeholder { color: rgba(255,255,255,0.2); }
+
+        .form-input:focus {
+            border-color: rgba(255,255,255,0.35);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--bright);
+            color: var(--midnight);
+            border: none;
+            border-radius: 8px;
+            padding: 0.85rem;
+            font-family: 'Orbitron';
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            box-shadow: 0 5px 25px var(--glow);
+            font-weight: 900;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: opacity 0.2s, transform 0.15s;
+        }
+
+        .submit-btn:hover { opacity: 0.9; }
+        .submit-btn:active { transform: scale(0.98); }
+
+        .error-msg {
+            display: none;
+            color: #ff6b6b;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            margin-top: 0.5rem;
+        }
+
+        /* Slide animation */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .step.active { animation: slideIn 0.3s ease forwards; }

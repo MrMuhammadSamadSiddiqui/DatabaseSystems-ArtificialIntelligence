@@ -1,3 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Syne:wght@400..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..700&display=swap'); /* Added Orbitron import */
+
+@font-face {
+    font-family: dmsans;
+    src: url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap');
+}
+
+*{
+    cursor:none;
+}
+
 :root {
     --midnight: #0A111E;
     --bright: #5ECBF0;
@@ -20,6 +34,43 @@
     max-width: 900px;
     margin: 0 auto;
     padding: 3rem 1.5rem;
+}
+
+.arrow{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+.arrow>.arrow2>a{
+    color: var(--text);
+}
+.arrow>.arrow2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1rem;
+    border-radius: 0.3rem; /* Increased border-radius */
+    font-family: Syne;
+    font-weight: 300; /* Increased font-weight */
+    font-size: 1.5rem; /* Increased font size */
+    letter-spacing: 0.35em; /* Increased letter-spacing */
+    text-decoration: none;
+    color: var(--greyish);
+    transition: all 0.3s ease-in-out; /* Standard transition */
+    border: 1px solid transparent; 
+
+}
+
+.arrow2:hover{
+    color: var(--text);
+    transform: scale(1.03); /* Slightly reduced scale */
+    border-color: rgba(94, 203, 240, 0.3); /* Added border on hover */
+    background-color: rgba(94, 203, 240, 0.05); /* Added subtle background on hover */
+}
+
+.arrow2{
+    cursor: none;
+    transform: scale(0.98); /* Added active effect */
 }
 
 .reg-header {

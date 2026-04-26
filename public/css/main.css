@@ -102,8 +102,8 @@ nav > div:nth-child(1) > div:nth-child(2) > p {
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(145, 168, 195, 0.2) 30%, rgba(145, 168, 195, 0.2) 70%, transparent); /* Slightly brighter line */
     margin: 1rem 0; /* Updated margin */
-    opacity: 0; /* Start invisible for animation */
-    animation: fadeIn .8s ease 1s forwards; /* Updated animation */
+    opacity: 1; /* Start invisible for animation */
+    /* animation: fadeIn .8s ease 1s forwards; Updated animation */
 }
 
 nav > div:nth-child(1) > div:nth-child(2) > p:nth-child(1) {
@@ -112,7 +112,6 @@ nav > div:nth-child(1) > div:nth-child(2) > p:nth-child(1) {
     font-weight: 800;
     font-size: 1.5rem; /* Increased font size */
     letter-spacing: 0.15em; /* Increased letter-spacing */
-    text-transform: uppercase; /* Ensure uppercase */
 }
 
 nav > div:nth-child(1) > div:nth-child(2) > p:nth-child(2) {
@@ -121,7 +120,6 @@ nav > div:nth-child(1) > div:nth-child(2) > p:nth-child(2) {
     font-family: Syne;
     font-weight: 200;
     font-size: 0.65rem; /* Increased font size */
-    text-transform: uppercase; /* Ensure uppercase */
 }
 
 nav > div:nth-child(2) {
@@ -143,7 +141,6 @@ nav > div:nth-child(2) > a {
     font-weight: 300; /* Increased font-weight */
     font-size: 1rem; /* Increased font size */
     letter-spacing: 0.35em; /* Increased letter-spacing */
-    padding-left: 0.6em; /* Updated padding-left */
     text-decoration: none;
     color: var(--greyish);
     transition: all 0.3s ease-in-out; /* Standard transition */
@@ -476,3 +473,6 @@ body:has(a:hover) #ring {
     margin-top: 1rem;
     box-shadow: 0 0 20px var(--glow);
 }
+
+
+
