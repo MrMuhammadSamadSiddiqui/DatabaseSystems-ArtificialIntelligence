@@ -3,16 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/public/css/login.css">
+    <title>Login — VEI NEXUS</title>
+    <link rel="stylesheet" href="/public/css/main.css">
     <script src="/public/js/script.js" defer></script>
-    
+    <style>
+        .login-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        .login-title {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-heading {
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: #fff;
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+        }
+
+        /* STEP 1 — Role selection */
+        .step { display: none; }
+        .step.active { display: block; }
+
+        .role-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .role-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            padding: 1.8rem 1rem;
+            color: #fff;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .role-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .role-btn .role-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+
+        .role-btn .role-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .role-btn .role-name {
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        /* STEP 2 — Login form */
+        .back-btn {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.4);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0;
+            margin-bottom: 1.5rem;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover { color: rgba(255,255,255,0.8); }
+
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 0.3rem 0.9rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.65rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            letter-spacing: 0.03em;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .form-input::placeholder { color: rgba(255,255,255,0.2); }
+
+        .form-input:focus {
+            border-color: rgba(255,255,255,0.35);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #fff;
+            color: #0a0a0a;
+            border: none;
+            border-radius: 8px;
+            padding: 0.85rem;
+            font-family: inherit;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: opacity 0.2s, transform 0.15s;
+        }
+
+        .submit-btn:hover { opacity: 0.9; }
+        .submit-btn:active { transform: scale(0.98); }
+
+        .error-msg {
+            display: none;
+            color: #ff6b6b;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            margin-top: 0.5rem;
+        }
+
+        /* Slide animation */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .step.active { animation: slideIn 0.3s ease forwards; }
+    </style>
 </head>
 <body>
-     <div class="bg_pattern"></div>
-      <div class="bg_grid"></div>
-        <div id="cursor"></div>
-        <div id="ring"></div>
+
+    <div class="bg_pattern"></div>
+    <div class="bg_grid"></div>
+    <div id="cursor"></div>
+    <div id="ring"></div>
+
     <main>
         <nav>
             <div>
@@ -25,10 +225,136 @@
                 </div>
             </div>
             <div>
-                <a href="main.html">BACK TO HOME</a>
+                <a href="/public/register.html">REGISTER</a>
+                <a href="/public/login.html">LOGIN</a>
             </div>
         </nav>
         <div class="line"></div>
+
+        <div class="login-wrapper">
+            <div class="login-card">
+
+                <!-- STEP 1: Choose role -->
+                <div class="step active" id="step-role">
+                    <p class="login-title">VEI NEXUS</p>
+                    <h1 class="login-heading">Welcome back.</h1>
+                    <p style="font-size: 0.8rem; color: rgba(255,255,255,0.4); letter-spacing: 0.05em;">
+                        Who are you logging in as?
+                    </p>
+                    <div class="role-grid">
+                        <button class="role-btn" onclick="selectRole('teacher')">
+                            <span class="role-icon">🎓</span>
+                            <div class="role-name">Teacher</div>
+                            <div class="role-label">Faculty</div>
+                        </button>
+                        <button class="role-btn" onclick="selectRole('student')">
+                            <span class="role-icon">📚</span>
+                            <div class="role-name">Student</div>
+                            <div class="role-label">Enrolled</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Teacher login -->
+                <div class="step" id="step-teacher">
+                    <button class="back-btn" onclick="goBack()">← Back</button>
+                    <div class="role-badge">🎓 Teacher</div>
+                    <h2 class="login-heading" style="font-size: 1.3rem; margin-bottom: 1.5rem;">
+                        Faculty Login
+                    </h2>
+                    <div class="form-group">
+                        <label class="form-label" for="teacher-id">Teacher ID</label>
+                        <input class="form-input" type="text" id="teacher-id" placeholder="e.g. 234T-VE">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="teacher-pass">Password</label>
+                        <input class="form-input" type="password" id="teacher-pass" placeholder="Enter your password">
+                    </div>
+                    <p class="error-msg" id="teacher-error">Invalid ID or password. Please try again.</p>
+                    <button class="submit-btn" onclick="handleLogin('teacher')">Login</button>
+                </div>
+
+                <!-- STEP 2: Student login -->
+                <div class="step" id="step-student">
+                    <button class="back-btn" onclick="goBack()">← Back</button>
+                    <div class="role-badge">📚 Student</div>
+                    <h2 class="login-heading" style="font-size: 1.3rem; margin-bottom: 1.5rem;">
+                        Student Login
+                    </h2>
+                    <div class="form-group">
+                        <label class="form-label" for="student-roll">Roll Number</label>
+                        <input class="form-input" type="text" id="student-roll" placeholder="e.g. 2789-VE">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="student-pass">Password</label>
+                        <input class="form-input" type="password" id="student-pass" placeholder="Enter your password">
+                    </div>
+                    <p class="error-msg" id="student-error">Invalid roll number or password. Please try again.</p>
+                    <button class="submit-btn" onclick="handleLogin('student')">Login</button>
+                </div>
+
+            </div>
+        </div>
     </main>
+
+    <script>
+        function selectRole(role) {
+            document.getElementById('step-role').classList.remove('active');
+            document.getElementById('step-' + role).classList.add('active');
+        }
+
+        function goBack() {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            // clear errors
+            document.getElementById('teacher-error').style.display = 'none';
+            document.getElementById('student-error').style.display = 'none';
+            document.getElementById('step-role').classList.add('active');
+        }
+
+        function handleLogin(role) {
+            if (role === 'teacher') {
+                const id = document.getElementById('teacher-id').value.trim();
+                const pass = document.getElementById('teacher-pass').value.trim();
+                const err = document.getElementById('teacher-error');
+
+                if (!id || !pass) {
+                    err.textContent = 'Please fill in both fields.';
+                    err.style.display = 'block';
+                    return;
+                }
+
+                // TODO: Replace with your actual authentication logic / API call
+                // Example: fetch('/api/teacher-login', { method: 'POST', body: JSON.stringify({ id, pass }) })
+                err.style.display = 'none';
+                alert('Teacher login submitted! Connect to your backend here.');
+
+            } else {
+                const roll = document.getElementById('student-roll').value.trim();
+                const pass = document.getElementById('student-pass').value.trim();
+                const err = document.getElementById('student-error');
+
+                if (!roll || !pass) {
+                    err.textContent = 'Please fill in both fields.';
+                    err.style.display = 'block';
+                    return;
+                }
+
+                // TODO: Replace with your actual authentication logic / API call
+                err.style.display = 'none';
+                alert('Student login submitted! Connect to your backend here.');
+            }
+        }
+
+        // Allow pressing Enter to submit
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const teacherStep = document.getElementById('step-teacher');
+                const studentStep = document.getElementById('step-student');
+                if (teacherStep.classList.contains('active')) handleLogin('teacher');
+                if (studentStep.classList.contains('active')) handleLogin('student');
+            }
+        });
+    </script>
+
 </body>
 </html>
