@@ -249,62 +249,62 @@ body:has(a:hover) #ring {
 }
 
 .description {
-    padding: 4rem 1.5rem; /* Updated padding */
-    line-height: 1.8; /* Increased line-height */
-    max-width: 1000px; /* Added max-width */
-    margin: 0 auto; /* Center description */
-    border-radius: 1rem; /* Added border-radius */
-    background-color: rgba(31, 43, 58, 0.2); /* Added subtle background */
-    backdrop-filter: blur(5px); /* Added backdrop-filter */
-    margin-top: 2rem; /* Added margin-top */
+    padding: 4rem 1.5rem;
+    line-height: 1.8; 
+    max-width: 1000px; 
+    margin: 0 auto; 
+    border-radius: 1rem; 
+    background-color: rgba(31, 43, 58, 0.2); 
+    backdrop-filter: blur(5px); 
+    margin-top: 2rem; 
 }
 
 .description h1 {
     color: var(--bright);
     font-family: 'Orbitron', sans-serif;
     font-weight: 700;
-    font-size: 2.8rem; /* Increased font size */
-    letter-spacing: 0.1em; /* Increased letter-spacing */
-    margin-bottom: 1.5rem; /* Increased margin-bottom */
-    text-shadow: 0 2px 10px var(--glow); /* Added text-shadow */
+    font-size: 2.8rem; 
+    letter-spacing: 0.1em; 
+    margin-bottom: 1.5rem; 
+    text-shadow: 0 2px 10px var(--glow); 
 }
 
 .description h2 {
     color: var(--bright);
     font-family: 'Orbitron', sans-serif;
     font-weight: 600;
-    font-size: 1.6rem; /* Increased font size */
-    letter-spacing: 0.12em; /* Increased letter-spacing */
-    margin-top: 2.5rem; /* Increased margin-top */
-    margin-bottom: 1rem; /* Increased margin-bottom */
+    font-size: 1.6rem; 
+    letter-spacing: 0.12em; 
+    margin-top: 2.5rem; 
+    margin-bottom: 1rem;
 }
 
 .description p {
     color: var(--text);
     font-family: Syne;
     font-weight: 300;
-    font-size: 1.1rem; /* Increased font size */
-    margin-bottom: 0.8rem; /* Increased margin-bottom */
+    font-size: 1.1rem; 
+    margin-bottom: 0.8rem; 
 }
 
 .description li {
     color: var(--text);
     font-family: Syne;
     font-weight: 300;
-    font-size: 1.1rem; /* Increased font size */
+    font-size: 1.1rem; 
     list-style: none;
-    margin-bottom: 0.6rem; /* Increased margin-bottom */
-    padding-left: 1.5rem; /* Increased padding-left */
-    position: relative; /* Essential for pseudo-element positioning */
+    margin-bottom: 0.6rem; 
+    padding-left: 1.5rem; 
+    position: relative; 
 }
 
 .description li::before {
     content: '— ';
     color: var(--bright);
-    position: absolute; /* Essential for precise positioning */
+    position: absolute; 
     left: 0;
     top: 50%;
-    transform: translateY(-50%); /* Center vertically */
+    transform: translateY(-50%); 
 }
 
 @media (max-width: 768px) {
@@ -334,12 +334,12 @@ body:has(a:hover) #ring {
 
 /* Individual Block/Card Styling */
 .feature-card {
-    background: rgba(255, 255, 255, 0.03); /* Very subtle transparent background */
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(145, 168, 195, 0.15);
     padding: 1.5rem;
     border-radius: 12px;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    backdrop-filter: blur(10px); /* Glassmorphism effect */
+    backdrop-filter: blur(10px); 
     position: relative;
     overflow: hidden;
 }
@@ -361,7 +361,7 @@ body:has(a:hover) #ring {
     color: var(--slate);
 }
 
-/* Hover Effect: Card glows and moves up */
+/* Hover Effect: Card glows and moves up cool lag rha hataana chaho hata lo as image is small */
 .feature-card:hover {
     transform: translateY(-8px);
     border-color: var(--bright);
@@ -369,7 +369,7 @@ body:has(a:hover) #ring {
     box-shadow: 0 10px 30px -10px rgba(94, 203, 240, 0.2);
 }
 
-/* Subtle accent line on top of each card */
+/* Subtle accent line on top of each card accent google fonts sa pick kia hai */
 .feature-card::before {
     content: '';
     position: absolute;
@@ -412,12 +412,12 @@ body:has(a:hover) #ring {
     margin: 0 auto;
 }
 
-/* Left side (Text) takes 60% width */
+
 .hero-text {
     flex: 1.2;
 }
 
-/* Right side (Image) takes 40% width */
+
 .hero-visual {
     flex: 0.8;
     display: flex;
@@ -425,7 +425,7 @@ body:has(a:hover) #ring {
     align-items: center;
 }
 
-/* Image Styling with Glow and Float */
+
 .image-orb {
     position: relative;
     width: 100%;
@@ -445,7 +445,7 @@ body:has(a:hover) #ring {
     50% { transform: translateY(-20px); }
 }
 
-/* vertically on mobile */
+
 @media (max-width: 1024px) {
     .hero-container {
         flex-direction: column;
@@ -458,7 +458,7 @@ body:has(a:hover) #ring {
     }
 }
 
-/* Buttons and Spans */
+
 .description h1 span {
     color: var(--bright);
     text-shadow: 0 0 15px var(--glow);
