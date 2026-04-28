@@ -19,8 +19,9 @@ CREATE TABLE teachers (
     full_name       VARCHAR(100) NOT NULL,
     password        TEXT NOT NULL,                 -- bcrypt hashed
     subject         VARCHAR(100),                  -- e.g. "Physics"
-    phone           VARCHAR(20),
+    phone           VARCHAR(50),
     created_at      TIMESTAMP DEFAULT NOW()
+    email           VARCHAR(50) unique
 );
 
 
@@ -42,46 +43,65 @@ INSERT INTO grade_levels (name) VALUES
 -- Roll number institute dega e.g. STU-2025-001
 -- Student khud login karega roll_number + password se
 
-CREATE TABLE students (
-    roll_number     SERIAL PRIMARY KEY,  -- e.g. STU-2025-001 (admin assign karega)
-    full_name       VARCHAR(100) NOT NULL,
-    password        TEXT NOT NULL,                 -- bcrypt hashed
-    grade_level_id  INT REFERENCES grade_levels(id) ON DELETE SET NULL,
-    phone           VARCHAR(20),
-    guardian_name   VARCHAR(100),
-    guardian_contact VARCHAR(20),
-    created_at      TIMESTAMP DEFAULT NOW()
+CREATE TABLE register_students (
+    register_id      INT SERIAL  PRIMARY KEY ,
+    Name             VARCHAR(100) , 
+    Phone            VARCHAR(50) ,
+    Guardian_Name    VARCHAR(50) ,
+    Guardian_Contact VARCHAR(50) ,
+    DOB               DATE  ,
+    DOR               DATE  ,
+    Education_board   VARCHAR(50) CHECK IN ('O Level','A Level','IGCSE','Edexcel'),
+    Email             VARCHAR(100) ,
+    Status            VARCHAR(30) CHECK IN ('ACCEPTED','PENDING','REJECTED') 
 );
 
+CREATE TRIGGER DELTE_STUDENT AS 
+    after update on register_students 
+    begin 
+
+CREATE TABLE Students(
+     student_id   INT FK, 
+     roll_no      VARCHAR(20) primary key ,  
+     password     varchar(500) , 
+     accepted_at  timestamp default now() 
+);
+
+CREATE TABLE SIBLINGS (
+   STUDENT_ID INT FK , 
+   SIBLING_ID  varchar(20) , 
+   primary key (STUDENT_ID , SIBLING_ID) 
+) ; 
 
 -- ─── 5. SUBJECTS ─────────────────────────────────────────────
 
 CREATE TABLE subjects (
-    id              SERIAL PRIMARY KEY,
+    id              INT PRIMARY KEY,
     name            VARCHAR(100) NOT NULL,
     grade_level_id  INT REFERENCES grade_levels(id) ON DELETE CASCADE
 );
 
-INSERT INTO subjects (name, grade_level_id) VALUES
-    ('Mathematics',       1),  -- O Level
-    ('Physics',           1),
-    ('Chemistry',         1),
-    ('English',           1),
-    ('Mathematics',       2),  -- A Level
-    ('Physics',           2),
-    ('Chemistry',         2),
-    ('Mathematics',       3),  -- IGCSE
-    ('English Language',  3),
-    ('Mathematics',       4),  -- Edexcel
-    ('Business Studies',  4);
+INSERT INTO subjects (id ,name, grade_level_id) VALUES
+    (4034 ,'Mathematics',       1),  -- O Level
+    (5054 , 'Physics',           1),
+    (5070 , 'Chemistry',         1),
+    (1123 ,'English',           1),
+    (4037 , 'Additional Mathematics',  1),
+    (9709 , 'Mathematics',       2),  -- A Level
+    (9702 , 'Physics',           2),
+    (9701 ,'Chemistry',         2),
+    (0580 , 'Mathematics',       3),  -- IGCSE
+    (0500 , 'English Language',  3),
+    (0625 , 'Physics',  3),
+    (1122 , 'Mathematics',       4),  -- Edexcel
+    (1127 , 'Business Studies',  4);
 
 
 -- ─── 6. COURSES ──────────────────────────────────────────────
 -- Har subject ka ek course — teacher assign hoga
 
 CREATE TABLE courses (
-    id              SERIAL PRIMARY KEY,
-    title           VARCHAR(200) NOT NULL,       -- e.g. "O Level Physics 2025"
+    student_roll_number      varchar(20) references students(roll_no) , 
     subject_id      INT REFERENCES subjects(id) ON DELETE SET NULL,
     teacher_id      INT REFERENCES teachers(id) ON DELETE SET NULL,
     is_published    BOOLEAN DEFAULT FALSE,
@@ -94,6 +114,7 @@ CREATE TABLE courses (
 CREATE TABLE chapters (
     id          SERIAL PRIMARY KEY,
     course_id   INT REFERENCES courses(id) ON DELETE CASCADE,
+    
     title       VARCHAR(200) NOT NULL,
     position    INT NOT NULL
 );
