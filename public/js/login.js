@@ -69,3 +69,16 @@
                 b.classList.add('fa-eye')
             }
         }
+
+        const m=window.matchMedia("(max-width:768px)");
+        function atag(e){
+            if(e.matches){
+                d=document.getElementById('a-tag')
+                d.innerHTML=`<i class="fa-solid fa-arrow-left"></i>`
+            }
+            else{
+                d.innerHTML=`BACK TO MAIN`
+            }
+        }
+        atag(m)
+        m.addEventListener("change",atag);
