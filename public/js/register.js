@@ -1,4 +1,18 @@
    let siblingCount = 0;
+   
+       function showMessage(message,type='error'){
+    const box =document.getElementById('msg-box')
+    box.textContent = message
+    box.className =`show ${type}`
+    if(type=='success'){
+      box.innerHTML+=`<i class="fa-solid fa-check"></i>`
+    }
+    else{
+      box.innerHTML+=`<i class="fa-solid fa-x"></i>`
+    }
+    setTimeout(()=>{box.classList.remove('show')},3000)
+    }
+    
 
     // ── Toggle Custom Class ───────────────────────────
     function toggleCustomClass(value) {
@@ -97,13 +111,62 @@
       if (siblingCount === 0) toggleSiblings(false);
     }
 
+    window.toggleCustomClass =
+    toggleCustomClass
+
+window.toggleSiblings =
+    toggleSiblings
+
+window.addSibling =
+    addSibling
+
+window.removeSibling =removeSibling
+    
     function updateAddButton() {
       const btn = document.getElementById('add-sibling-btn');
       btn.style.display = siblingCount >= 5 ? 'none' : 'block';
     }
 
+
     // ── Form Submission ───────────────────────────────
-    document.getElementById('reg-form').addEventListener('submit', function(e) {
-      // Form submission logic remains same as before
-      console.log("Form submitted!");
-    });
+    document.getElementById('reg-form').addEventListener('submit',async function(e) {
+      e.preventDefault()
+
+      
+    let classyear=this.class_year.value
+    if(classyear==="other"){
+        classyear=this.custom_class_year.value
+    }
+
+      const siblings=[]
+      for(let i=1;i<=siblingCount;i++){
+
+        const name=document.querySelector(`[name="sibling_name_${i}"]`).value
+        const roll=document.querySelector(`[name="sibling_roll_${i}"]`).value
+        if(name&&roll){
+          siblings.push({name,roll})
+        }
+      }
+      const body={
+        full_name:this.full_name.value,
+        father_name:this.father_name.value,
+        guardian_contact:this.guardian_contact.value,
+        date_of_birth:this.date_of_birth.value,
+        education_board:this.education_board.value,
+        class_year:classyear,
+        has_sibling:this.has_sibling.value,
+        siblings
+      }
+      const response=await fetch( 'http://localhost:3000/register',{
+        method:"POST",
+        headers:{
+          'Content-Type':'application/json' 
+        },
+        body:JSON.stringify(body)
+      })
+const data = await response.json()
+if(response.ok){showMessage(data.message,'success')}
+else{showMessage(data.error,'error')}});
+
+
+

@@ -43,28 +43,151 @@ INSERT INTO grade_levels (name) VALUES
 -- Roll number institute dega e.g. STU-2025-001
 -- Student khud login karega roll_number + password se
 
+INSERT INTO grade_levels (name)
+VALUES
+    ('O Level'),
+    ('A Level'),
+    ('IGCSE'),
+    ('Edexcel');
+
 CREATE TABLE register_students (
-    register_id      INT SERIAL  PRIMARY KEY ,
-    Name             VARCHAR(100) , 
-    Phone            VARCHAR(50) ,
-    Guardian_Name    VARCHAR(50) ,
-    Guardian_Contact VARCHAR(50) ,
-    DOB               DATE  ,
-    DOR               DATE  ,
-    Education_board   VARCHAR(50) CHECK IN ('O Level','A Level','IGCSE','Edexcel'),
-    Email             VARCHAR(100) ,
-    Status            VARCHAR(30) CHECK IN ('ACCEPTED','PENDING','REJECTED') 
+
+    register_id          SERIAL PRIMARY KEY,
+
+    full_name            VARCHAR(100) NOT NULL,
+
+    father_name          VARCHAR(100) NOT NULL,
+
+    guardian_contact     VARCHAR(50) NOT NULL,
+
+    date_of_birth        DATE NOT NULL,
+
+    date_of_registration DATE DEFAULT CURRENT_DATE,
+
+    grade_level_id       INT NOT NULL,
+
+    class_year           VARCHAR(100) NOT NULL,
+
+    email                VARCHAR(100),
+
+    has_sibling          BOOLEAN DEFAULT FALSE,
+
+    status               VARCHAR(30)
+                          CHECK (
+                              status IN (
+                                  'ACCEPTED',
+                                  'PENDING',
+                                  'REJECTED'
+                              )
+                          )
+                          DEFAULT 'PENDING',
+
+    CONSTRAINT fk_grade_level
+        FOREIGN KEY (grade_level_id)
+        REFERENCES grade_levels(id)
+
 );
+
+
+
+-- TRIGGER OF ADDING AND APPROVING STUDENTS
+
+CREATE OR REPLACE FUNCTION approve_student_trigger()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF NEW.status = 'ACCEPTED'
+    AND OLD.status = 'PENDING'
+    THEN
+        INSERT INTO students(student_id,roll_no,password)
+        VALUES (
+            NEW.register_id,
+            'VE-' ||
+            LPAD(NEW.register_id::TEXT,3,'0'),
+            've' ||
+            LPAD(NEW.register_id::TEXT,3,'0')
+        );
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE TRIGGER student_approval_trigger
+AFTER UPDATE OF status
+ON register_students
+FOR EACH ROW
+WHEN (OLD.status IS DISTINCT FROM NEW.status)
+EXECUTE FUNCTION approve_student_trigger();
+
+
+-- TRIGGER OF REMVING SIBLING IF REJECTED 
+
+CREATE OR REPLACE FUNCTION remove_siblings_on_rejection()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    IF NEW.status='REJECTED'
+    AND OLD.status<>'REJECTED'
+    THEN
+        DELETE FROM siblings
+        WHERE register_id=NEW.register_id;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER reject_student_trigger
+AFTER UPDATE OF status
+ON register_students
+FOR EACH ROW
+WHEN (OLD.status IS DISTINCT FROM NEW.status)
+EXECUTE FUNCTION remove_siblings_on_rejection();
+
+
+
+
+
+
+-- SIBLING
+
+CREATE TABLE siblings (
+
+    sibling_id      SERIAL PRIMARY KEY,
+
+    register_id     INT NOT NULL,
+
+    sibling_name    VARCHAR(100) NOT NULL,
+
+    sibling_class   VARCHAR(100),
+
+    CONSTRAINT fk_student
+        FOREIGN KEY (register_id)
+        REFERENCES register_students(register_id)
+        ON DELETE CASCADE
+
+);
+
+
 
 CREATE TRIGGER DELTE_STUDENT AS 
     after update on register_students 
     begin 
 
-CREATE TABLE Students(
-     student_id   INT FK, 
-     roll_no      VARCHAR(20) primary key ,  
-     password     varchar(500) , 
-     accepted_at  timestamp default now() 
+CREATE TABLE students (
+
+    student_id INT UNIQUE NOT NULL,
+
+    roll_no VARCHAR(20) PRIMARY KEY,
+
+    password VARCHAR(500) NOT NULL,
+
+    accepted_at TIMESTAMP DEFAULT NOW(),
+
+    CONSTRAINT fk_student_registration
+    FOREIGN KEY (student_id)
+    REFERENCES register_students(register_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE SIBLINGS (
