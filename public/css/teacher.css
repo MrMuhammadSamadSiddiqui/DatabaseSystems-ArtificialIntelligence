@@ -148,7 +148,9 @@ a, button {
     font-size:1rem;
     letter-spacing: 0.12em;
     color: var(--greyish);
-    padding: 10px 12px;
+    justify-content: center;
+    padding: 1rem 1rem;
+    width: 15vw; 
     border-radius: 6px;
     border: 1px solid ;
     border-color: rgba(94, 203, 240, 0.1);
@@ -219,7 +221,9 @@ a, button {
     color: var(--greyish);
     border: 1px solid rgba(94, 203, 240, 0.1);
     border-radius: 6px;
-    padding: 10px 16px;
+    justify-content: center;
+    padding: 1rem 1rem;
+    width: 15vw; 
     text-align: center;
     transition: color 0.3s, border-color 0.3s, background 0.3s, text-shadow 0.3s;
 }
@@ -315,7 +319,7 @@ a, button {
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(94, 203, 240, 0.12);
     border-radius: 14px;
-    padding: 22px;
+    padding: 2.5rem;
     margin-bottom: 18px;
     transition: border-color 0.3s;
 }
@@ -342,15 +346,15 @@ a, button {
 }
 
 .card-details h4 {
-    font-family: 'Orbitron';
-    font-size: 0.85rem;
+    font-family: 'Syne';
+    font-size: 1rem;
     letter-spacing: 0.08em;
     color: var(--text);
-    margin-bottom: 6px;
+    margin-bottom: 0.9rem;
 }
 
 .card-details p {
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     letter-spacing: 0.06em;
     color: var(--greyish);
     font-family: Syne;
@@ -373,11 +377,13 @@ a, button {
     background: var(--bright);
     color: var(--midnight);
     border: none;
-    padding: 10px 20px;
+    /* justify-content: center; */
+    padding: 1.5rem 1.5rem;
+    /* width: 15vw;  */
     border-radius: 6px;
-    font-family: 'Orbitron';
-    font-weight: 700;
-    font-size: 0.68rem;
+    /* font-family: 'Orbitron'; */
+    /* font-weight: 700; */
+    font-size: 0.8rem;
     letter-spacing: 0.1em;
     white-space: nowrap;
     transition: box-shadow 0.3s, transform 0.2s;
