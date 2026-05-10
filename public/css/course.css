@@ -1,0 +1,573 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
+
+*{
+    font-family: Syne;
+    cursor: none !important;
+}
+
+/* ── Section visibility ── */
+.course-section        { display: none; }
+.course-section.active-section { display: block; }
+
+.course-content {
+    padding: 28px 50px 50px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* ── Section header row ── */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+
+
+.section-heading {
+    
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+    color: var(--greyish);
+}
+
+/* ── Course identity (top bar left) ── */
+.course-identity {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.course-title {
+    font-family: 'Orbitron';
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    color: var(--bright);
+    text-shadow: 0 0 12px var(--glow);
+}
+
+.course-code {
+    font-family: 'Syne';
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    color: var(--greyish);
+}
+
+/* ── Data Table ── */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th {
+    font-family: 'Syne';
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: var(--greyish);
+    text-align: left;
+    padding: 0 16px 14px 0;
+    border-bottom: 1px solid rgba(94, 203, 240, 0.08);
+}
+
+.data-table td {
+    font-family: 'Syne';
+    font-size: 0.8rem;
+    color: var(--text);
+    padding: 14px 16px 14px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    letter-spacing: 0.04em;
+}
+
+.data-table tbody tr:hover td {
+    color: var(--bright);
+    background: rgba(94, 203, 240, 0.02);
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.total-mark {
+    color: var(--bright) !important;
+    font-weight: 600;
+}
+
+.attendance-good { color: #4ade80 !important; font-weight: 600; }
+.attendance-warn { color: #facc15 !important; font-weight: 600; }
+
+/* ── Students Grid ── */
+.students-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.student-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 0;
+}
+
+.student-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: rgba(94, 203, 240, 0.1);
+    border: 1px solid rgba(94, 203, 240, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron';
+    font-size: 0.7rem;
+    color: var(--bright);
+    flex-shrink: 0;
+}
+
+.student-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.student-info strong {
+    font-family: 'Syne';
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.04em;
+}
+
+.student-info span {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--greyish);
+}
+
+/* ── General info rows ── */
+.general-info {
+    /* max-width: 560px; */
+    width: 100%;
+    
+    
+}
+
+#section-general{
+    /* background-color: red; */
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;    
+}
+
+.profile-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(94, 203, 240, 0.06);
+}
+
+.profile-row:last-child { border-bottom: none; }
+
+.profile-label {
+    font-family: 'Orbitron';
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    color: var(--greyish);
+}
+
+.profile-value {
+    font-family: 'Syne';
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: 0.05em;
+}
+
+.status-active {
+    color: #4ade80 !important;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    font-family: 'Orbitron';
+}
+
+/* ── Count badge ── */
+.count-badge {
+    font-family: 'Orbitron';
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--bright);
+    border: 1px solid rgba(94, 203, 240, 0.2);
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: rgba(94, 203, 240, 0.05);
+}
+
+/* ── Back button ── */
+.back-btn {
+   display: block;
+    text-decoration: none;
+    font-family: 'Syne';
+    font-size: 0.9rem;
+    letter-spacing: 0.18em;
+    color: var(--greyish);
+    border: 1px solid rgba(94, 203, 240, 0.1);
+    border-radius: 6px;
+    justify-content: center;
+    padding: 1rem 1rem;
+    width: 15vw; 
+    text-align: center;
+    transition: color 0.3s, border-color 0.3s, background 0.3s, text-shadow 0.3s;
+}
+
+.back-btn:hover {
+    color: var(--bright);
+    border-color: rgba(94, 203, 240, 0.3);
+    background: rgba(94, 203, 240, 0.05);
+}
+
+
+
+
+
+
+
+.inactive{
+    display: none !important;
+}
+
+
+
+
+#cursor{
+      position: fixed; 
+      top: 0; 
+      left: 0;
+      width: 10px; 
+      height: 10px;
+      background: var(--bright);
+      border-radius: 50%;
+      z-index: 9999;
+      transition: width .2s, height .2s, background .2s;
+      mix-blend-mode: screen;
+    }
+    #ring{
+        position: fixed; 
+        top: 0; 
+        left: 0;
+        width: 36px; 
+        height: 36px;
+        border: 1px solid rgba(94,203,240,0.45);
+        border-radius: 50%;
+        z-index: 9999;
+        transform: translate(-35%,-35%);
+      transition: width .3s, height .3s, border-color .3s;
+      pointer-events: none;
+}
+#cursor, #ring {
+  opacity: 0;
+  transition: opacity .3s, width .2s, height .2s;
+}
+body:has(a:hover) #cursor{
+    width: 14px; 
+    height: 14px;
+}
+body:has(a:hover) #ring{
+      width: 40px; 
+      height: 40px;
+      border-color: rgba(94,203,240,0.7);
+}
+
+
+.not_available {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--greyish);
+}
+
+.not_available p {
+    font-family: 'Orbitron';
+    font-size: 1rem;
+    letter-spacing: 0.25em;
+    color: var(--greyish);
+    margin: 0;
+}
+
+.not_available span {
+    font-size: 1rem;
+    color: var(--greyish);
+    opacity: 0.5;
+    max-width: 320px;
+    line-height: 1.6;
+}
+
+
+
+
+
+.post-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.feed-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--greyish);
+}
+.feed-empty svg { opacity: 0.3; }
+.feed-empty p {
+    font-family: 'Orbitron';
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    color: var(--greyish);
+    margin: 0;
+}
+.feed-empty span {
+    font-size: 0.75rem;
+    color: var(--greyish);
+    opacity: 0.5;
+    max-width: 320px;
+    line-height: 1.6;
+}
+.post-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(94, 203, 240, 0.12);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    animation: slideDown 0.35s cubic-bezier(.16,1,.3,1);
+}
+.post-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.post-badge {
+    font-family: 'Orbitron';
+    font-size: 0.55rem;
+    letter-spacing: 0.22em;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.post-badge.ANNOUNCEMENT {
+    background: rgba(94, 203, 240, 0.08);
+    border: 1px solid rgba(94, 203, 240, 0.2);
+    color: var(--bright);
+}
+
+.post-badge.RESOURCE {
+    background: rgba(74, 222, 128, 0.08);
+    border: 1px solid rgba(74, 222, 128, 0.2);
+    color: #4ade80;
+}
+
+.post-time {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--greyish);
+    opacity: 0.6;
+    margin-left: auto;
+}
+
+.post-title {
+    font-family: 'Orbitron';
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    color: var(--text);
+}
+
+.post-body {
+    font-family: 'Syne';
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--greyish);
+}
+
+.post-link a {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--bright);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.post-link a:hover { opacity: 1; }
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 17, 30, 0.85);
+    backdrop-filter: blur(6px);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay.open {
+    display: flex;
+}
+.post-modal {
+    background: rgba(15, 23, 42, 0.97);
+    border: 1px solid rgba(94, 203, 240, 0.15);
+    border-radius: 14px;
+    padding: 30px;
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    animation: modalPop 0.3s cubic-bezier(.16,1,.3,1);
+}
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-title {
+    font-family: 'Orbitron';
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    color: var(--bright);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--greyish);
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s;
+    font-size: 1.3rem;
+}
+
+
+.modal-close:hover { color: var(--text); }
+
+.badge-selector {
+    display: flex;
+    gap: 8px;
+}
+
+.badge-opt {
+    font-family: 'Orbitron';
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(94, 203, 240, 0.15);
+    background: transparent;
+    color: var(--greyish);
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.badge-opt.active {
+    background: rgba(94, 203, 240, 0.1);
+    border-color: rgba(94, 203, 240, 0.35);
+    color: var(--bright);
+}
+
+.badge-opt:hover:not(.active) {
+    color: var(--text);
+    border-color: rgba(94, 203, 240, 0.2);
+}
+.modal-input,
+.modal-textarea {
+    width: 100%;
+    background: rgba(10, 17, 30, 0.8);
+    border: 1px solid rgba(94, 203, 240, 0.1);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: 'Syne';
+    font-size: 0.85rem;
+    color: var(--text);
+    outline: none;
+    resize: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.modal-input::placeholder,
+.modal-textarea::placeholder {
+    color: rgba(99, 125, 150, 0.45);
+}
+
+.modal-input:focus,
+.modal-textarea:focus {
+    border-color: rgba(94, 203, 240, 0.35);
+    box-shadow: 0 0 0 3px rgba(94, 203, 240, 0.06);
+}
+
+.modal-submit {
+    width: 100%;
+    padding: 13px;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+}
+
+
+
+#msg-box{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    min-width: 250px;
+    max-width: 90%;
+    padding: 14px 18px;     
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    border-radius: 0.1rem;
+    background: rgba(94, 203, 240, 0.18);
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--bright);
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    transform: translateY(-120px);
+    opacity: 0;
+    transition:
+        transform 0.35s ease,
+        opacity 0.35s ease;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+#msg-box.show{
+    transform: translateY(0);
+    opacity: 1;
+}
+
+#msg-box.error i{
+    color: red;
+
+}
+
+#msg-box.success i{
+    color:#22B33A;
+}

@@ -1,11 +1,4 @@
-/* ============================================
-   VEI NEXUS — Teacher Dashboard CSS
-   teacher.css
-   ============================================ */
 
-
-
-/* ── Variables ── */
 :root {
     --midnight: #0A111E;
     --bright:   #5ECBF0;
@@ -16,7 +9,6 @@
     --danger-glow: rgba(255, 77, 77, 0.15);
 }
 
-/* ── Reset & Base ── */
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -61,7 +53,7 @@ a, button {
     transform: translate(-50%, -50%);
     width: 600px;
     height: 600px;
-    background-image: url('/public/assets/images/logo_white.png');
+    /* background-image: url('/public/assets/images/logo_white.png'); */
     background-size: contain;
     background-repeat: no-repeat;
     opacity: 0.03;
@@ -594,8 +586,41 @@ body:has(a:hover) #ring{
 
 
 .parent{
-    /* background-color: red; */
+ 
     width: 100%;
     
 }
 
+
+
+.inactive{
+    display: none !important;
+}
+
+
+.not_available {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--greyish);
+}
+
+.not_available p {
+    font-family: 'Orbitron';
+    font-size: 1rem;
+    letter-spacing: 0.25em;
+    color: var(--greyish);
+    margin: 0;
+}
+
+
+.inactive{
+    display: none;
+}
+.active{
+    display: block;
+}

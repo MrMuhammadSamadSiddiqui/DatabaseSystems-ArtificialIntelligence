@@ -24,7 +24,14 @@ let data=0
 
 async function load_whole_courses(){
     data=await load_teacher(teacher.id)
-    
+    if(data.length==0){
+        document.querySelector('.not_available').classList.add('active')
+        document.querySelector('.course-list').classList.add('inactive')
+        return
+    }
+    document.querySelector('.not_available').classList.remove('active')
+    document.querySelector('.not_available').classList.add('inactive')
+    document.querySelector('.course-list').classList.remove('inactive')
     list=document.querySelector('.course-list')
     // console.log(data)
     list.innerHTML=``
@@ -46,7 +53,8 @@ load_whole_courses()
 
 
 function load_course(i){
-    console.log("Manage Course",data[i])
+    localStorage.setItem('course',JSON.stringify(data[i]));
+    window.location.href =`course.html`;
 }
 
 

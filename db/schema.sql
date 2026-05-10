@@ -259,6 +259,20 @@ CREATE TABLE progress (
 
 
 
+CREATE TABLE course_posts(
+    id SERIAL PRIMARY KEY,
+    post_type VARCHAR(20) CHECK(post_type IN ('ANNOUNCEMENT','RESOURCE')) NOT NULL,
+    course_id INT NOT NULL,
+    title VARCHAR(150) NOT NULL,
+    content TEXT NOT NULL,
+    link TEXT,
+    created_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY (course_id)
+    REFERENCES courses(id)
+    ON DELETE CASCADE
+);
+
+
 
 -- TRIGGERS AND PROCEDURES 
 
@@ -292,6 +306,7 @@ ON register_students
 FOR EACH ROW
 WHEN (OLD.status IS DISTINCT FROM NEW.status)
 EXECUTE FUNCTION approve_student_trigger();
+
 
 
 -- TRIGGER OF REMOVING SIBLING IF REJECTED 
@@ -343,6 +358,25 @@ ON students
 FOR EACH ROW    
 EXECUTE FUNCTION remove_students()
 
+
+-- ADD STUDENT COUNT IF NEW STUDENT IS ENROLLED TO A COURSE
+
+CREATE OR REPLACE FUNCTION increase_student_count()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    UPDATE courses
+    SET student_count = student_count + 1
+    WHERE id = NEW.course_id;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER add_student_counter
+AFTER INSERT
+ON enrollments
+FOR EACH ROW
+EXECUTE FUNCTION increase_student_count();
 
 
 

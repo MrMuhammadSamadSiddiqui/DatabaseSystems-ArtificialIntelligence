@@ -152,25 +152,96 @@ std_data.created_at = correct_date(std_data.created_at);
 
 app.post('/teacher_courses',async (req,res)=>{
     const{id}=req.body
-    const{data:course,error:course_error}=await sb.from("courses").select(`subject_id,created_at,student_count,subjects (id,name, grade_levels(id,name))`).eq('teacher_id', id).eq('is_published', true);
+    const{data:course,error:course_error}=await sb.from("courses").select(`id,subject_id,created_at,student_count,subjects (id,name, grade_levels(id,name))`).eq('teacher_id', id).eq('is_published', true);
     for(let i=0;i<course.length;i++){
         course[i].created_at=correct_date(course[i].created_at)
     }
     
     if(course_error){
         return res.status(400).json({
-            error:std_error.message
+            error:course_error.message
         })
     }
-    if(course.length==0){
+    
+        return res.json({data:course})
+    
+})
+
+app.post('/course_update',async (req,res)=>{
+    const{id}=req.body
+    const{data:course,error:course_error}=await sb.from("courses").select('*').eq('id', id);
+    if(course_error){
+        return res.status(400).json({
+            error:course_error.message
+        })
+    }
+    
+    return res.json({data:course})
+})
+
+app.post('/student_in_course',async (req,res)=>{
+    const{course_id}=req.body
+    const{data:a,error: error_a}=await sb .from('enrollments').select(`student_roll_no,students(register_students(full_name))`).eq('course_id', course_id);
+     if(error_a){
+        return res.status(400).json({
+            error:error_a.message
+        })
+    }
+    if(a.length==0){
         return res.status(401).json({
-            error:"No Course Assigned Yet"
+            error:"No Student Yet"
         })
     }
     else{
-        return res.json({data:course})
+        return res.json({data:a})
     }
 })
+
+app.post('/add_post',async (req,res)=>{
+    const{
+        badge,
+        id,
+        topic,
+        tex,
+        ln 
+    }=req.body
+
+    const{data,error}=await sb.from('course_posts').insert([{  
+        'post_type':badge,
+        'course_id':id,
+        'title':topic,
+        'content':tex,
+        'link':ln 
+    }]);
+    if(error){
+        return res.status(400).json({
+            error:error.message
+        });
+    }
+    return res.status(200).json({ 
+        success: true, 
+       
+    });
+    
+})
+
+app.post('/get_post',async (req,res)=>{
+    const{
+        id
+    }=req.body
+
+    const{data:posts,error}=await sb.from('course_posts').select('*').eq('course_id',id).order('created_at',{ascending:false});
+    if(error){
+        return res.status(400).json({
+            error:error.message
+        });
+    }
+    return res.json({
+        data:posts
+    });
+    
+})
+
 
 app.listen(port,()=>{
     console.log('Server is running on ',port)
