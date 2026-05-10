@@ -26,7 +26,6 @@
 * {
     margin: 0;
     padding: 0;
-    cursor: none !important;
 }
 
 body {
@@ -175,33 +174,6 @@ nav > div:nth-child(2) > a:active {
     opacity: 0; /* Hidden by default */
 }
 
-#ring {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 36px; /* Slightly larger ring */
-    height: 36px;
-    border: 1px solid rgba(94, 203, 240, 0.5); /* Brighter ring */
-    border-radius: 50%;
-    z-index: 9999;
-    transform: translate(-35%, -35%);
-    transition: width .3s, height .3s, border-color .3s, opacity .3s; /* Standard transition */
-    pointer-events: none;
-    opacity: 0; /* Hidden by default */
-}
-
-body:has(a:hover) #cursor {
-    width: 14px; /* Larger on hover */
-    height: 14px;
-    opacity: 1 !important; /* Force visible on hover */
-}
-
-body:has(a:hover) #ring {
-    width: 40px; /* Larger on hover */
-    height: 40px;
-    border-color: rgba(94, 203, 240, 0.8); /* Brighter on hover */
-    opacity: 1 !important; /* Force visible on hover */
-}
 
 @media (max-width: 992px) { /* Updated breakpoint */
     main {

@@ -1,8 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
 
+
+
+:root{--amber: #083748;
+    --navy: #1F2B3A;
+    --slate: #91A8C3;
+    --teal: #023141;
+    --midnight: #0A111E; /* Deeper midnight */
+    --text: #E8F1FA;
+    --bright: #5ECBF0;
+    --glow: rgba(94, 203, 240, 0.18);
+    --greyish: #637D96;
+}
 *{
     font-family: Syne;
-    cursor: none !important;
 }
 
 /* ── Section visibility ── */
@@ -242,44 +253,7 @@
 
 
 
-#cursor{
-      position: fixed; 
-      top: 0; 
-      left: 0;
-      width: 10px; 
-      height: 10px;
-      background: var(--bright);
-      border-radius: 50%;
-      z-index: 9999;
-      transition: width .2s, height .2s, background .2s;
-      mix-blend-mode: screen;
-    }
-    #ring{
-        position: fixed; 
-        top: 0; 
-        left: 0;
-        width: 36px; 
-        height: 36px;
-        border: 1px solid rgba(94,203,240,0.45);
-        border-radius: 50%;
-        z-index: 9999;
-        transform: translate(-35%,-35%);
-      transition: width .3s, height .3s, border-color .3s;
-      pointer-events: none;
-}
-#cursor, #ring {
-  opacity: 0;
-  transition: opacity .3s, width .2s, height .2s;
-}
-body:has(a:hover) #cursor{
-    width: 14px; 
-    height: 14px;
-}
-body:has(a:hover) #ring{
-      width: 40px; 
-      height: 40px;
-      border-color: rgba(94,203,240,0.7);
-}
+
 
 
 .not_available {
@@ -570,4 +544,285 @@ body:has(a:hover) #ring{
 
 #msg-box.success i{
     color:#22B33A;
+}
+
+
+
+
+
+
+/* ── Attendance ── */
+.att-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    
+    width: 100%;
+}
+
+.save-btn {
+    font-family: 'Orbitron';
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: 1px solid rgba(74, 222, 128, 0.35);
+    background: rgba(74, 222, 128, 0.08);
+    color: #4ade80;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+    padding: 0.7rem 1.5rem;
+
+}
+
+.save-btn:hover {
+    background: rgba(74, 222, 128, 0.15);
+    box-shadow: 0 0 16px rgba(74, 222, 128, 0.25);
+}
+
+/* Date window navigation */
+.date-nav {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.date-nav-btn {
+    background: rgba(94, 203, 240, 0.07);
+    border: 1px solid rgba(94, 203, 240, 0.15);
+    color: var(--bright);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.25s;
+}
+
+.date-nav-btn:hover { background: rgba(94, 203, 240, 0.14); }
+.date-nav-btn:disabled { opacity: 0.25; cursor: default; }
+
+.date-window-label {
+    font-family: 'Orbitron';
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    color: var(--greyish);
+}
+
+/* Card + scroll */
+.att-card { padding: 0; overflow: hidden; }
+
+.att-scroll {
+    overflow-x: auto;
+    padding: 22px;
+}
+
+/* Table */
+.att-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 400px;
+}
+
+.att-table thead th {
+    font-family: 'Orbitron';
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    color: var(--greyish);
+    padding: 0 14px 14px;
+    text-align: center;
+    border-bottom: 1px solid rgba(94, 203, 240, 0.08);
+    white-space: nowrap;
+}
+
+.att-name-col {
+    text-align: left !important;
+    min-width: 160px;
+}
+
+.att-table tbody td {
+    padding: 12px 14px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    vertical-align: middle;
+}
+
+.att-table tbody tr:last-child td { border-bottom: none; }
+
+.att-table tbody tr:hover td {
+    background: rgba(94, 203, 240, 0.02);
+}
+
+/* Student name cell */
+.att-student-name {
+    font-family: 'Syne';
+    font-size: 0.82rem;
+    color: var(--text);
+    text-align: left;
+    letter-spacing: 0.04em;
+}
+
+/* Attendance cell button */
+.att-cell {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid rgba(94, 203, 240, 0.15);
+    background: rgba(94, 203, 240, 0.05);
+    color: var(--greyish);
+    font-family: 'Orbitron';
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.att-cell:hover {
+    border-color: rgba(94, 203, 240, 0.3);
+    background: rgba(94, 203, 240, 0.1);
+}
+
+/* Absent state */
+.att-cell.absent {
+    background: rgba(255, 77, 77, 0.12);
+    border-color: rgba(255, 77, 77, 0.35);
+    color: #ff4d4d;
+}
+
+.att-cell.absent:hover {
+    background: rgba(255, 77, 77, 0.2);
+}
+
+/* Empty state */
+.att-empty {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.att-empty p {
+    font-family: 'Orbitron';
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--greyish);
+}
+
+.att-empty span {
+    font-size: 0.72rem;
+    color: var(--greyish);
+    opacity: 0.5;
+}
+
+/* DATE MODAL  */
+
+
+/* ── Date Modal extras ── */
+.date-modal-options {
+    display: flex;
+    gap: 8px;
+}
+
+.custom-date-wrap { margin-top: 4px; }
+
+input[type="date"].modal-input {
+    color-scheme: dark;
+    cursor: pointer;
+}
+
+.date-preview-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 16px;
+    border: 1px solid rgba(94, 203, 240, 0.12);
+    border-radius: 10px;
+    background: rgba(94, 203, 240, 0.04);
+    margin-top: 4px;
+}
+
+.preview-weekday {
+    font-family: 'Orbitron';
+    font-size: 0.58rem;
+    letter-spacing: 0.28em;
+    color: var(--greyish);
+}
+
+.preview-date {
+    font-family: 'Orbitron';
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    color: var(--bright);
+    text-shadow: 0 0 12px var(--glow);
+}
+
+.date-error {
+    font-family: 'Orbitron';
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: #ff4d4d;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.att-delete-date{
+    background-color: transparent;
+    color: red;
+    border: none;
+}
+
+#attbody{
+    font-size: 1rem;
+    background-color: red;
+}
+
+
+.delete-cancel-btn {
+    flex: 1;
+    font-family: 'Orbitron';
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(145, 168, 195, 0.15);
+    background: transparent;
+    color: var(--greyish);
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+.delete-cancel-btn:hover {
+    background: rgba(145, 168, 195, 0.06);
+    color: var(--text);
+}
+
+.delete-confirm-btn {
+    flex: 1;
+    font-family: 'Orbitron';
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 77, 77, 0.3);
+    background: rgba(255, 77, 77, 0.1);
+    color: #ff4d4d;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.delete-confirm-btn:hover {
+    background: rgba(255, 77, 77, 0.18);
+    box-shadow: 0 0 16px rgba(255, 77, 77, 0.2);
+}
+
+.post-time{
+    font-size: 0.8rem;
 }

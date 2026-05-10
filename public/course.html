@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="/public/css/teacher.css">
     <link rel="stylesheet" href="/public/css/course.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="/public/js/course.js" defer></script>
-    <script src="/public/js/script.js" defer></script>
+    <script  src="/public/js/course.js" defer></script>
     
 
 </head>
@@ -17,8 +16,7 @@
     <div class="bg_watermark"></div>
     <div class="dashboard-wrapper">
 
-    <div id="cursor"></div>
-    <div id="ring"></div>
+
 
         <!-- SIDEBAR -->
         <nav class="sidebar">
@@ -138,7 +136,7 @@
 
 
                 <!-- ── ATTENDANCE SECTION ── -->
-<section class="course-section" id="section-attendance">
+<!-- <section class="course-section" id="section-attendance">
 
     <div class="section-header">
         
@@ -151,7 +149,95 @@
         </table>
     </div>
 
+</section> -->
+
+<section class="course-section" id="section-attendance">
+    <div class="section-header">
+        <div class="att-controls">
+            <button class="action-btn" id="addDateBtn">+ ADD DATE</button>
+            <button class="save-btn" id="saveAttBtn" style="display:none;">SAVE</button>
+        </div>
+    </div>
+
+    <!-- Date window navigation -->
+    <div class="date-nav" id="dateNav" style="display:none;">
+        <button class="date-nav-btn" id="prevWindow">&#8592;</button>
+        <span class="date-window-label" id="windowLabel"></span>
+        <button class="date-nav-btn" id="nextWindow">&#8594;</button>
+    </div>
+
+    <div class="nexus-card att-card">
+        <div class="att-scroll">
+            <table class="att-table" id="attTable">
+                <thead>
+                    <tr id="attHeaderRow">
+                    </tr>
+                </thead>
+                <tbody id="attBody">
+                </tbody>
+            </table>
+
+            <div class="att-empty" id="attEmpty">
+                <p>NO DATES ADDED YET</p>
+                <span>Click + ADD DATE to record your first session.</span>
+            </div>
+        </div>
+    </div>
+
+    
+ <div class="modal-overlay" id="dateModalOverlay">
+    <div class="post-modal">
+        <div class="modal-header">
+            <span class="modal-title">ADD DATE</span>
+            <button class="modal-close" id="closeDateModal">
+                
+            </button>
+        </div>
+        <div class="date-modal-options">
+            <button class="badge-opt active" id="useTodayBtn">USE TODAY</button>
+            <button class="badge-opt" id="useCustomBtn">CUSTOM DATE</button>
+        </div>
+        <div class="custom-date-wrap" id="customDateWrap" style="display:none;">
+            <input type="date" class="modal-input" id="customDateInput"/>
+        </div>
+        <div class="date-preview" id="datePreview">
+            <!-- shows selected date preview -->
+        </div>
+        <button class="action-btn modal-submit" id="confirmDateBtn">ADD</button>
+
+    </div>
+</div>
+
+<!-- Delete Date Confirm Modal -->
+<div class="modal-overlay" id="deleteDateOverlay">
+    <div class="post-modal">
+        <div class="modal-header">
+            <span class="modal-title">DELETE DATE</span>
+            <button class="modal-close" id="closeDeleteModal">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="date-preview-box" style="margin-top:4px;">
+            <span class="preview-weekday">ARE YOU SURE?</span>
+            <span class="preview-date" id="deleteDateLabel"></span>
+        </div>
+
+        <p style="font-size:0.72rem; color:var(--greyish); line-height:1.6; text-align:center;">
+            This will permanently remove this date and all attendance records for it.
+        </p>
+
+      <div style="display:flex; gap:10px;">
+    <button class="delete-cancel-btn" id="cancelDeleteBtn">CANCEL</button>
+    <button class="delete-confirm-btn" id="confirmDeleteBtn">DELETE</button>
+</div>
+    </div>
+</div>
 </section>
+
                 <!-- ── STUDENTS SECTION ── -->
                 <section class="course-section" id="section-students">
                     <div class="section-header">

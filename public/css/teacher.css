@@ -53,7 +53,7 @@ a, button {
     transform: translate(-50%, -50%);
     width: 600px;
     height: 600px;
-    /* background-image: url('/public/assets/images/logo_white.png'); */
+    background-image: url('/public/assets/images/logo_white.png');
     background-size: contain;
     background-repeat: no-repeat;
     opacity: 0.03;
@@ -90,11 +90,11 @@ a, button {
 
 /* Logo + title */
 .sidebar-header {
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* align-items: center; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     /* text-align: center; */
-    /* justify-items: center; */
+    justify-items: center;
     /* gap: 1rem; */
     border-bottom: 1px solid ;
     border-color: rgba(94, 203, 240, 0.1);
@@ -370,7 +370,7 @@ a, button {
     color: var(--midnight);
     border: none;
     /* justify-content: center; */
-    padding: 1.5rem 1.5rem;
+    padding: 0.7rem 1.5rem;
     /* width: 15vw;  */
     border-radius: 6px;
     /* font-family: 'Orbitron'; */
@@ -491,46 +491,7 @@ a, button {
 
 
 
-/* CURSOR AND RING  */
 
-#cursor{
-      position: fixed; 
-      top: 0; 
-      left: 0;
-      width: 10px; 
-      height: 10px;
-      background: var(--bright);
-      border-radius: 50%;
-      z-index: 9999;
-      transition: width .2s, height .2s, background .2s;
-      mix-blend-mode: screen;
-    }
-    #ring{
-        position: fixed; 
-        top: 0; 
-        left: 0;
-        width: 36px; 
-        height: 36px;
-        border: 1px solid rgba(94,203,240,0.45);
-        border-radius: 50%;
-        z-index: 9999;
-        transform: translate(-35%,-35%);
-      transition: width .3s, height .3s, border-color .3s;
-      pointer-events: none;
-}
-#cursor, #ring {
-  opacity: 0;
-  transition: opacity .3s, width .2s, height .2s;
-}
-body:has(a:hover) #cursor{
-    width: 14px; 
-    height: 14px;
-}
-body:has(a:hover) #ring{
-      width: 40px; 
-      height: 40px;
-      border-color: rgba(94,203,240,0.7);
-}
 
 
 

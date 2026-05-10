@@ -21,7 +21,6 @@
 *{
     margin: 0;
     padding: 0;
-    cursor: none;
     font-family: Syne;
     overflow-x: hidden;
 }
@@ -154,47 +153,6 @@ nav > div:nth-child(2) > a:active {
 
 
 
-#cursor{
-      position: fixed; 
-      top: 0; 
-      left: 0;
-      width: 10px; 
-      height: 10px;
-      background: var(--bright);
-      border-radius: 50%;
-      z-index: 9999;
-      transition: width .2s, height .2s, background .2s;
-      mix-blend-mode: screen;
-    }
-    #ring{
-        position: fixed; 
-        top: 0; 
-        left: 0;
-        width: 36px; 
-        height: 36px;
-        border: 1px solid rgba(94,203,240,0.45);
-        border-radius: 50%;
-        z-index: 9999;
-        transform: translate(-35%,-35%);
-      transition: width .3s, height .3s, border-color .3s;
-      pointer-events: none;
-}
-#cursor, #ring {
-  opacity: 0;
-  transition: opacity .3s, width .2s, height .2s;
-}
-body:has(a:hover) #cursor{
-    width: 14px; 
-    height: 14px;
-}
-body:has(a:hover) #ring{
-      width: 40px; 
-      height: 40px;
-      border-color: rgba(94,203,240,0.7);
-}
-
-
-
 
  .login-wrapper {
             min-height: 100vh;
@@ -303,9 +261,13 @@ body:has(a:hover) #ring{
             padding: 0;
             margin-bottom: 1.5rem;
             transition: color 0.2s;
+            
         }
 
-        .back-btn:hover { color: rgba(255,255,255,0.8); }
+        .back-btn:hover { 
+            color: rgba(255,255,255,0.8); 
+            
+        }
 
         .role-badge {
             display: inline-flex;

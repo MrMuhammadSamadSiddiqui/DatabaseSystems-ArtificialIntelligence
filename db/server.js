@@ -19,6 +19,12 @@ export const sb=createClient(
     key
 )
 
+
+function convertDate(d){
+    const parts = d.split('-');
+    return `${parts[2]}-${parts[1]}-${parts[0]}`;
+}
+
 app.post('/register',async(req,res)=>{
 
     const {
@@ -241,6 +247,52 @@ app.post('/get_post',async (req,res)=>{
     });
     
 })
+
+app.post('/save_attendance',async (req, res)=>{
+    const {att,cou}=req.body
+    const k=Object.keys(att)
+    const id=cou.id
+    const dates=Object.keys(att[k[0]])
+    for(let i=0;i<k.length;i++){
+        let {data,error:del}=await sb.from('attendance_logs').delete().eq('course_id',cou.id).eq('student_roll_no',k[i])
+        if(del){
+            return res.status(200).json({
+                error:del.message
+            })
+        }
+    }
+    for(let i=0;i<k.length;i++){
+        for(let j=0;j<dates.length;j++){
+            let stat;
+            if(att[k[i]][dates[j]]=='present') stat='P'
+            else stat='A'
+            let {data:add,error}=await sb.from('attendance_logs').insert({student_roll_no:k[i],course_id:id,attendance_date:convertDate(dates[j]),status:stat})
+                if(error){
+                     return res.status(201).json({
+                    error:error.message
+                })
+            }
+        }
+    }
+    return res.json({
+        success:true
+    })
+})
+
+app.post('/load_attendance',async (req,res)=>{
+    const {course_id}=req.body
+    const {data:aten,error}=await sb.from('attendance_logs').select('student_roll_no,status,attendance_date').eq('course_id',course_id)
+    if(error){
+        return res.status(400).json({
+            error:error.message
+        })
+    }
+    return res.json({
+        data:aten
+    })
+})
+
+
 
 
 app.listen(port,()=>{

@@ -273,6 +273,19 @@ CREATE TABLE course_posts(
 );
 
 
+create table public.attendance_logs (
+  id serial not null,
+  student_roll_no character varying(20) not null,
+  course_id integer not null,
+  attendance_date date not null,
+  status character(1) not null,
+  constraint attendance_logs_pkey primary key (id),
+  constraint attendance_logs_student_roll_no_course_id_attendance_date_key unique (student_roll_no, course_id, attendance_date),
+  constraint attendance_logs_course_id_fkey foreign KEY (course_id) references courses (id) on delete CASCADE,
+  constraint attendance_logs_student_roll_no_fkey foreign KEY (student_roll_no) references students (roll_no) on delete CASCADE,
+  constraint attendance_logs_status_check check ((status = any (array['P'::bpchar, 'A'::bpchar])))
+) TABLESPACE pg_default;
+
 
 -- TRIGGERS AND PROCEDURES 
 
@@ -377,6 +390,54 @@ AFTER INSERT
 ON enrollments
 FOR EACH ROW
 EXECUTE FUNCTION increase_student_count();
+
+
+
+-- ATTENDANCE UPDATE
+
+CREATE OR REPLACE FUNCTION update_attend()
+RETURNS TRIGGER
+AS $$
+DECLARE   
+total_count NUMERIC;
+present_count NUMERIC;
+attend NUMERIC;
+s_id VARCHAR(20);
+c_id INT;
+BEGIN
+    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+        c_id:=NEW.course_id;
+        s_id:=NEW.student_roll_no;
+    ELSE
+        c_id:=OLD.course_id;
+        s_id:=OLD.student_roll_no;
+    END IF;
+
+    SELECT COUNT(*) INTO total_count FROM attendance_logs WHERE course_id=c_id AND student_roll_no=s_id ;
+    SELECT COUNT(*) INTO present_count FROM attendance_logs WHERE course_id=c_id AND student_roll_no=s_id AND status='P' ;
+    if(total_count=0) THEN 
+    attend:=0;
+    else 
+    attend:= (present_count/total_count)*100;
+    END IF;
+    UPDATE enrollments
+    SET attendance=attend
+    WHERE course_id=c_id AND student_roll_no=s_id ;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE TRIGGER update_attend_trig
+AFTER INSERT OR UPDATE OR DELETE ON attendance_logs
+FOR EACH ROW
+EXECUTE FUNCTION update_attend();
+
+
+
+
 
 
 
