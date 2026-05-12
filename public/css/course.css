@@ -30,9 +30,10 @@ nav > div:nth-child(1) {
 .course-section.active-section { display: block; }
 
 .course-content {
-    padding: 28px 50px 50px;
+    padding: 30px 50px;
     flex: 1;
     overflow-y: auto;
+    
 }
 
 .section-header {
@@ -318,7 +319,7 @@ nav > div:nth-child(1) {
     line-height: 1.6;
 }
 .post-card {
-    background: rgba(255, 255, 255, 0.03);
+      background: #111827;
     border: 1px solid rgba(94, 203, 240, 0.12);
     border-radius: 12px;
     padding: 20px 24px;
@@ -362,11 +363,22 @@ nav > div:nth-child(1) {
     margin-left: auto;
 }
 
+.line{
+        height: 1px;
+      background:rgba(145,168,195,0.15);
+      /* margin: 0 56px; */
+      opacity: 1;
+      /* animation: fadeIn .6s ease .6s forwards; */
+      width: 100%;
+    
+}
+
 .post-title {
-    font-family: 'Orbitron';
-    font-size: 0.8rem;
+    font-family: 'Syne';
+    font-size: 1rem;
     letter-spacing: 0.1em;
     color: var(--text);
+    
 }
 
 .post-body {

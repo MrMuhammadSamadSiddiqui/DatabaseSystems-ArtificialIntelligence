@@ -1,13 +1,15 @@
+//  DON'T SEND WHOLE TEACHER AND COURSE OBJECTS IN LOCAL STORAGE | FIX THAT ASAP !!!!!!!!!
 
 const teacher=JSON.parse(localStorage.getItem('teacher'));
 if(!teacher){
     window.location.replace("login.html");
 }
+
 async function load_teacher(i){
     const body={
         id:i
     }
-    const response=await fetch('http://localhost:3000/teacher_courses',{
+    const response=await fetch(`${BASE}/teacher_courses`,{
         method:"POST",
         headers:{
             'Content-Type':'application/json' 
@@ -21,7 +23,6 @@ async function load_teacher(i){
 }
 
 let data=0
-
 async function load_whole_courses(){
     data=await load_teacher(teacher.id)
     if(data.length==0){
@@ -33,15 +34,14 @@ async function load_whole_courses(){
     document.querySelector('.not_available').classList.add('inactive')
     document.querySelector('.course-list').classList.remove('inactive')
     list=document.querySelector('.course-list')
-    // console.log(data)
     list.innerHTML=``
     for(let i=0;i<data.length;i++){
+    
     list.innerHTML+=`
         <div class="nexus-card course-item">
                 <div class="card-details">
                     <h4>${data[i].subjects.grade_levels.name}</h4>
                     <h4>${data[i].subjects.name}</h4>
-
                     <p>${data[i].student_count} Students Enrolled</p>
                 </div>
             <button class="action-btn" onclick="load_course(${i})">MANAGE COURSE</button>
@@ -60,12 +60,9 @@ function load_course(i){
 
 document.querySelector('.teacher-name').textContent=teacher.full_name
 document.querySelector('.teacher-id').textContent=teacher.id
-
 document.getElementById('profile').classList.add('active')
 document.querySelector('.profile_btn').parentElement.classList.add('active');
 document.querySelector('.content-container').classList.add('profile-mode')
-
-
 document.getElementById('teacher-id').textContent = teacher.id;
 document.getElementById('teacher-name').textContent = teacher.full_name;
 document.getElementById('teacher-email').textContent = teacher.email;

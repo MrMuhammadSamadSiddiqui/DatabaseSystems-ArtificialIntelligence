@@ -27,12 +27,12 @@ function convertDate(d){
 let teachers=JSON.parse(localStorage.getItem('teacher'))
 let courses=JSON.parse(localStorage.getItem('course'))
 
-const map=['general','attendance','marks','students','info']
+const map=['general','attendance','students','info']
 
 document.addEventListener('DOMContentLoaded',()=>{
     document.querySelector('.'+map[0]).classList.add('active')
     document.querySelector('#section-'+map[0]).classList.add('active-section')
-    
+
 })
  
 
@@ -48,7 +48,7 @@ async function course_update(){
     const body={
         id:courses.id
     }
-    const response=await fetch('http://localhost:3000/course_update',{
+    const response=await fetch(`${BASE}/course_update`,{
         method:"POST",
         headers:{
             'Content-Type':'application/json' 
@@ -87,7 +87,7 @@ async function get_students_in_course(){
     const body={
         course_id:courses.id
     }
-    const response=await fetch('http://localhost:3000/student_in_course',{
+    const response=await fetch(`${BASE}/student_in_course`,{
         method:"POST",
         headers:{
             'Content-Type':'application/json' 
@@ -182,7 +182,7 @@ submitBtn.addEventListener('click',async () => {
         tex:text,
         ln:link
     }
-     const response=await fetch('http://localhost:3000/add_post',{
+     const response=await fetch(`${BASE}/add_post`,{
         method:"POST",
         headers:{
             'Content-Type':'application/json' 
@@ -209,7 +209,7 @@ async function add_posts(){
     let body={
         id:courses.id
     }
-    const data=await fetch('http://localhost:3000/get_post',{
+    const data=await fetch(`${BASE}/get_post`,{
         method:"POST",
         headers:{
             'Content-Type':'application/json' 
@@ -239,6 +239,7 @@ async function add_posts_res(){
                 <span class="post-badge ${data[i].post_type}">${data[i].post_type}</span>
                 <span class="post-time">${actual_date}</span>
             </div>
+            <div class="line"></div>
             <div class="post-title">${data[i].title}</div>
             <div class="post-body">${data[i].content}</div>
             <div class="post-link">
@@ -311,7 +312,7 @@ async function set_std() {
     let dirty = false;
 
     // ── DB INTEGRATION POINT 1 — Load existing attendance ──
-    const response = await fetch('http://localhost:3000/load_attendance', {
+    const response = await fetch(`${BASE}/load_attendance`, {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({ course_id: courses.id })
@@ -670,7 +671,7 @@ async function set_std() {
 
     saveAttBtn.addEventListener('click', async () => {
         const body = { att: attendance, cou: courses };
-        const response = await fetch('http://localhost:3000/save_attendance', {
+        const response = await fetch(`${BASE}/save_attendance`, {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify(body)

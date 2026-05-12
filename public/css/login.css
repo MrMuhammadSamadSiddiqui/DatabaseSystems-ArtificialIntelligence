@@ -337,7 +337,6 @@ nav > div:nth-child(2) > a:active {
     /* transform: translateY(-50%); */
     cursor: pointer;
     color: var(--bright);
-    cursor:none;
     transition: transform 0.25s ease-in-out;
 }
 .toggle-password:hover{

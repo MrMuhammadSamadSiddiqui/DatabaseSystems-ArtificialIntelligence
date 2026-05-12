@@ -160,6 +160,9 @@ std_data.created_at = correct_date(std_data.created_at);
     })
 })
 
+
+
+
 app.post('/teacher_courses',async (req,res)=>{
     const{id}=req.body
     const{data:course,error:course_error}=await sb.from("courses").select(`id,subject_id,created_at,student_count,subjects (id,name, grade_levels(id,name))`).eq('teacher_id', id).eq('is_published', true);
@@ -177,17 +180,47 @@ app.post('/teacher_courses',async (req,res)=>{
     
 })
 
-app.post('/course_update',async (req,res)=>{
+app.post('/student_courses',async (req,res)=>{
     const{id}=req.body
-    const{data:course,error:course_error}=await sb.from("courses").select('*').eq('id', id);
+    const{data:en,error:course_error}=await sb.from("enrollments").select(`id,attendance,enrolled_at,courses(*,subjects(*))`).eq('student_roll_no', id);
+    for(let i=0;i<en.length;i++){
+        en[i].enrolled_at=correct_date(en[i].enrolled_at)
+        en[i].courses.created_at=correct_date(en[i].courses.created_at)
+    }
+    
     if(course_error){
         return res.status(400).json({
             error:course_error.message
         })
     }
+    // console.log(en)
+    return res.json({data:en})
+})
+
+app.post('/course_update',async (req,res)=>{
+    const{id}=req.body
+    const{data:course,error:course_error}=await sb.from("courses").select('*').eq('id', id);
     
+    if(course_error){
+        return res.status(400).json({
+            error:course_error.message
+        })
+    }
     return res.json({data:course})
 })
+
+app.post('/complete_course_update',async (req,res)=>{
+    const{id}=req.body
+    const{data:course,error:course_error}=await sb.from("courses").select('*,teachers(*),subjects(*,grade_levels(*))').eq('id', id);
+    if(course_error){
+        return res.status(400).json({
+            error:course_error.message
+        })
+    }
+    return res.json({data:course})
+})
+
+
 
 app.post('/student_in_course',async (req,res)=>{
     const{course_id}=req.body
@@ -205,6 +238,20 @@ app.post('/student_in_course',async (req,res)=>{
     else{
         return res.json({data:a})
     }
+})
+
+
+app.post('/course_student',async (req,res)=>{
+    const{course_id,std_id}=req.body
+    const{data:a,error: error_a}=await sb.from('enrollments').select(`*`).eq('course_id', course_id).eq('student_roll_no',std_id);
+    if(error_a){
+         
+        return res.status(400).json({
+            error:error_a.message
+        })
+    }
+        return res.json({data:a})
+    
 })
 
 app.post('/add_post',async (req,res)=>{
@@ -296,9 +343,51 @@ app.post('/load_attendance',async (req,res)=>{
     })
 })
 
+app.post('/load_register_student',async (req,res)=>{
+    const {id}=req.body
+    
+    const {data:reg,error}=await sb.from('register_students').select(`*,grade_levels(*)`).eq('register_id',id)
+    if(error){
+        return res.status(400).json({
+            error:error.message
+        })
+    }
+    
+    return res.json({
+        data:reg
+    })
+})
 
+app.post('/load_original_student',async (req,res)=>{
+    const {id}=req.body
+    const {data:reg,error}=await sb.from('students').select('*').eq('student_id',id)
+    if(error){
+        return res.status(400).json({
+            error:error.message
+        })
+    }
+    
+    return res.json({
+        data:reg
+    })
+})
+
+
+app.post('/get_std_attendance',async (req,res)=>{
+    const {id,std_id}=req.body
+    const {data:atten,error}=await sb.from('attendance_logs').select('*').eq('student_roll_no',std_id).eq('course_id',id)
+    
+    if(error){
+        res.status(400).json({
+            error:error.message
+        })
+    }
+    return res.json({
+        data:atten
+    })
+})
 
 
 app.listen(port,()=>{
-    console.log('Server is running on ',port)
+    // console.log('Server is running on ',port)
 })

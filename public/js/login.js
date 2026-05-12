@@ -8,7 +8,7 @@
     else{
       box.innerHTML+=`<i class="fa-solid fa-x"></i>`
     }
-    // setTimeout(()=>{box.classList.remove('show')},3000)
+    setTimeout(()=>{box.classList.remove('show')},3000)
     }
 
 function selectRole(role) {
@@ -40,7 +40,7 @@ function selectRole(role) {
                     id,
                     pass
                 }
-                const response=await fetch( 'http://localhost:3000/login_teacher',{
+                const response=await fetch( `${BASE}/login_teacher`,{
                     method:"POST",
                     headers:{
                         'Content-Type':'application/json'
@@ -73,7 +73,7 @@ function selectRole(role) {
                     roll,
                     pass
                 }
-                const response=await fetch( 'http://localhost:3000/login_student',{
+                const response=await fetch( `${BASE}/login_student`,{
                     method:"POST",
                     headers:{
                         'Content-Type':'application/json'
@@ -85,7 +85,7 @@ function selectRole(role) {
             
                 if(response.ok){
                     localStorage.clear()
-                    localStorage.setItem('student',JSON.stringify(data.student));
+                    localStorage.setItem('student',JSON.stringify(data.student.student_id));
                     showMessage(data.message,'success')
                     setTimeout(()=>{window.location.href="student.html";},3000);
                 }

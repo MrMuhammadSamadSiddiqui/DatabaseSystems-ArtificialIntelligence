@@ -82,3 +82,32 @@
     padding-top:5rem;
     padding-bottom:3rem;
 }
+
+
+
+
+.att-student-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 6px;
+    border-bottom: 1px solid rgba(94, 203, 240, 0.06);
+    
+    
+}
+
+.att-student-row:last-child {
+    border-bottom: none;
+}
+
+.att-student-row:hover {
+    background: rgba(94, 203, 240, 0.02);
+    border-radius: 8px;
+}
+
+.att-row-date {
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    color: var(--text);
+}
+

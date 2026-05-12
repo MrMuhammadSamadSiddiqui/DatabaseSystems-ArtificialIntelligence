@@ -156,7 +156,7 @@ window.removeSibling =removeSibling
         has_sibling:this.has_sibling.value,
         siblings
       }
-      const response=await fetch( 'http://localhost:3000/register',{
+      const response=await fetch( `${BASE}/register`,{
         method:"POST",
         headers:{
           'Content-Type':'application/json' 

@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="/public/css/index.css">
     <link rel="stylesheet" href="/public/css/teacher.css">
     <link rel="stylesheet" href="/public/css/course.css">
+    <link rel="stylesheet" href="/public/css/student_course.css">
     <script src="/public/js/config.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script  src="/public/js/course.js" defer></script>
+    <script  src="/public/js/student_course.js" defer></script>
     
 
 </head>
@@ -70,8 +71,8 @@
                     <span class="course-title"></span>
                 </div>
                 <div class="teacher-identity">
-                        <span class="teacher-name"></span>
-                        <span class="teacher-id"></span>
+                        <span class="student-name"></span>
+                        <span class="student-id"></span>
                     </div>
             </div>
         </nav>
@@ -97,9 +98,7 @@
 
 <section class="course-section" id="section-general">
 
-    <div class="section-header">
-        <button class="action-btn" id="openPostModal">+ POST</button>
-    </div>
+
 
     <div class="post-feed" id="postFeed">
 
@@ -108,35 +107,13 @@
 
     <div id="post_not" class="not_available">
         <p>NO POSTS YET</p>
-        <span>Click + POST to make your first announcement or share a resource.</span>
     </div>
-
-
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="post-modal">
-            <div class="modal-header">
-                <span class="modal-title">NEW POST </span>
-                
-                <button class="modal-close" id="closeModal">x
-                </button>            
-            </div>
-            <div class="badge-selector">
-                <button class="badge-opt active" data-badge="ANNOUNCEMENT">ANNOUNCEMENT</button>
-                <button class="badge-opt" data-badge="RESOURCE">RESOURCE</button>
-            </div>
-            <input required type="text" class="modal-input" id="postTitle" placeholder="Title" maxlength="80"/>
-            <textarea required class="modal-textarea" id="postText" placeholder="Write something..." rows="4"></textarea>
-            <input type="url" class="modal-input" id="postLink" placeholder="Paste a link (optional)"/>
-            <button class="action-btn modal-submit" id="submitPost">POST</button>
-        </div>
-    </div>
-    
 </section>
 
 
 
 
-<section class="course-section" id="section-attendance">
+<!-- <section class="course-section" id="section-attendance">
     <div class="section-header">
         <div class="att-controls">
             <button class="action-btn" id="addDateBtn">+ ADD DATE</button>
@@ -218,6 +195,47 @@
 </div>
     </div>
 </div>
+</section> -->
+
+
+<section class="course-section" id="section-attendance">
+
+    <!-- Summary top field -->
+    <div class="nexus-card">
+        <div class="att-controls">
+            <div class="att-summary-item">
+                <span class="date-window-label">TOTAL</span>
+                <span class="att-summary-value" id="att-total">—</span>
+            </div>
+            <div class="att-summary-item">
+                <span class="date-window-label">PRESENT</span>
+                <span class="att-summary-value" id="att-present" style="color:#4ade80;">—</span>
+            </div>
+            <div class="att-summary-item">
+                <span class="date-window-label">ABSENT</span>
+                <span class="att-summary-value" id="att-absent" style="color:#ff4d4d;">—</span>
+            </div>
+            <div class="att-summary-item">
+                <span class="date-window-label">PERCENTAGE</span>
+                <span class="att-summary-value" id="att-percent">—</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attendance rows -->
+    <div class="nexus-card att-card">
+        <div class="att-scroll">
+
+            <div class="att-empty" id="attEmptyStudent">
+                <p>NO ATTENDANCE RECORDED</p>
+                <span>Your attendance will appear here once your teacher marks it.</span>
+            </div>
+
+            <div id="attList"></div>
+
+        </div>
+    </div>
+
 </section>
 
                 <section class="course-section" id="section-students">
@@ -273,7 +291,15 @@
                         </div>
                         <div class="profile-row">
                             <span class="profile-label">STARTED</span>
-                       
+                            <span class="profile-value"></span>
+                        </div>
+                        <div class="profile-row">
+                            <span class="profile-label">ENROLLED ON</span>
+                            <span class="profile-value"></span>
+                        </div>
+                        
+                        <div class="profile-row">
+                            <span class="profile-label">ATTENDANCE</span>
                             <span class="profile-value"></span>
                         </div>
                     </div>
@@ -284,8 +310,10 @@
     </div>
 
     
-    <div id="msg-box"></div>
 
     
+    <div id="msg-box"></div>
+
+
 </body>
 </html>
